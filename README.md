@@ -33,4 +33,7 @@ repository. The P2P VPS software is composed of three software packages:
 This repository contains *The Client*. [The Server and Marketplace software can be found here](https://github.com/RPiOVN/p2pvps-server).
 
 ### File Layout
-* The `client` directory contains various implementations of the P2P VPS Client code. 
+* The `client` directory contains various implementations of the P2P VPS Client code:
+  * The `simple` directory creates the simplest client Docker container. It will set up a reverse SSH connection
+  with no persistant storage and the user will not have sudo priveldges. It's the simplest, most limited, way
+  to create a VPS that can be rented out on P2P VPS.
