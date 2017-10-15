@@ -20,11 +20,14 @@ var Promise = require('node-promise');
 var exec = require('child_process').exec; //Used to execute command line instructions.
 //var Gpio = require('onoff').Gpio; //Used to read GPIO pins
 
-//var global = {}; //Global object variable.
-//global.serverIp = "174.138.35.118";
-//global.serverPort = "3002";
+
+//Marketplace server
 global.serverIp = "192.168.2.2";
 global.serverPort = "3000";
+
+//SSH server used for setting up a reverse SSH connection to the Client.
+global.sshServerIp = "174.138.35.118";
+global.sshServerPort = "6100";
 
 //Local libraries based on the different featuers of this software
 /*
