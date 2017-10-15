@@ -75,7 +75,7 @@ function Constructor() {
     var fileString = "var tunnel = require('reverse-tunnel-ssh');\n"+
       "tunnel({\n"+
       "  host: '"+global.sshServerIp+"',\n"+
-      "  port: "+global.sshServerIp+",\n"+
+      "  port: "+global.sshServerPort+",\n"+
       "  username: 'sshuser',\n"+
       "  password: 'sshuserpassword',\n"+
       "  dstHost: '0.0.0.0',\n"+
