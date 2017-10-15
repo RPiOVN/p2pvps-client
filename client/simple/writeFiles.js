@@ -47,8 +47,8 @@ function Constructor() {
         "COPY finalsetup finalsetup\n"+
         "COPY reverse-tunnel-generated.js reverse-tunnel.js\n"+
         "RUN chmod 775 finalsetup\n"+
-        "ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
-        //"ENTRYPOINT [\"./finalsetup\", \"node\", \"reverse-tunnel.js\"]\n";
+        //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
+        "ENTRYPOINT [\"./finalsetup\", \"node\", \"reverse-tunnel.js\"]\n";
 
 
     fs.writeFile('./Dockerfile', fileString, function (err) {
