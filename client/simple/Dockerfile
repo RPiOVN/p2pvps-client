@@ -14,9 +14,9 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
 RUN npm install express
 RUN npm install reverse-tunnel-ssh
-RUN useradd -ms /bin/bash ammmIjZZhl
-RUN echo ammmIjZZhl:5qteBqLAmk | chpasswd
-EXPOSE 6001
+RUN useradd -ms /bin/bash WI4mljaHzC
+RUN echo WI4mljaHzC:C64BWtx6bI | chpasswd
+EXPOSE 6002
 EXPOSE 3100
 COPY dummyapp.js dummyapp.js
 COPY finalsetup finalsetup
