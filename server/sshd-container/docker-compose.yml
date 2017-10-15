@@ -1,0 +1,16 @@
+#Copyright 2017 RPiOVN.org
+#Licensing Information: http://rpiovn.org/license 
+
+sshd-container:
+  build: .
+  dockerfile: Dockerfile
+#  links:
+#    - mongodb
+  ports:
+    - "6000-6200:6000-6200"
+#  volumes:
+#    - ./theme:/home/connextcms/theme
+#    - ./plugins:/home/connextcms/plugins
+#    - ./public:/home/connextcms/public
+  restart: always
+    

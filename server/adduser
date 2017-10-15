@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Script to add a user to Linux system
+# Call with the following syntax: ./adduser <username> <password>
+
+echo "UID: $(id -u)"
+echo "first arg: $1"
+
+if [ $(id -u) -eq 0 ]; then
+  #read -p "Enter username : " username
+  #read -s -p "Enter password : " password
+
+  egrep "^$1" /etc/passwd >/dev/null
+  if [ $? -eq 0 ]; then
+    echo "$1 exists!"
+    exit 1
+  else
+    pass=$(perl -e 'print crypt($ARGV[0], "password")' $2)
+    useradd -m -p $pass $1
+    [ $? -eq 0 ] && echo "User has been added to system!" || echo "Failed to add a user!"
+  fi
+else
+  echo "Only root may add a user to the system"
+  exit 2
+fi

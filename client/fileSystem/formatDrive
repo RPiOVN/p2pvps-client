@@ -1,0 +1,9 @@
+#!/bin/bash
+#This script reformats a USB flash drive to the ext4 file system.
+#This script assumes that the USB flash drive is connected to /dev/sda1.
+#You can verify it with this command: ls -l /dev/disk/by-uuid/
+#This script needs to be run with sudo permission.
+#https://www.raspberrypi-spy.co.uk/2014/05/how-to-mount-a-usb-flash-disk-on-the-raspberry-pi/
+
+umount /dev/sda1
+mkfs.ext4 -F /dev/sda1

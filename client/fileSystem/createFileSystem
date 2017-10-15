@@ -1,0 +1,78 @@
+#!/bin/bash
+#This script creates an encrypted file system and swap file on the USB flash drive.
+#It assumes the flash drive is attached to /dev/sda1
+#https://launchbylunch.com/posts/2014/Jan/13/encrypting-docker-on-digitalocean/
+
+#This script assumes the cryptsetup package is installed
+apt-get -y install cryptsetup
+
+# Location on the root filesystem where we'll store everything:
+CRYPTFS_ROOT=/media/usb
+
+# Create a random encryption key:
+dd if=/dev/urandom of=$CRYPTFS_ROOT/key bs=4K count=1
+
+# Create and allocate a 1 GB swap file:
+dd if=/dev/zero of=$CRYPTFS_ROOT/swap bs=1M count=1024
+
+# Create a sparse 4 GB file:
+truncate -s 4G $CRYPTFS_ROOT/disk
+
+#change the permissions on all these files so only root can access them
+chmod -R 700 "$CRYPTFS_ROOT"
+
+# Add a line to /etc/crypttab for our swap file:
+echo "swap $CRYPTFS_ROOT/swap /dev/urandom swap" >> /etc/crypttab
+
+# Add swap entry to /etc/fstab so the swap initializes on reboot
+echo "/dev/mapper/swap none swap defaults 0 0" >> /etc/fstab
+
+# Pick an unused loop back device and save it to a variable:
+LOOP_DEVICE=$(losetup -f)
+
+# Mount our block device file to it:
+losetup $LOOP_DEVICE $CRYPTFS_ROOT/disk
+
+# Create a LUKS volume with the default options using our key file
+cryptsetup --batch-mode --key-file=$CRYPTFS_ROOT/key luksFormat $LOOP_DEVICE
+
+# Open it up so it appeares in /dev/mapper
+cryptsetup luksOpen --key-file=$CRYPTFS_ROOT/key $LOOP_DEVICE cryptfs
+
+#The encrypted block device should now show up as /dev/mapper/cryptfs. We can check the cipher details for it by running:
+#cryptsetup status cryptfs
+
+#create a filesystem on the encrypted block device
+mkfs.ext4 /dev/mapper/cryptfs
+
+# Create a mount point for the encrypted filesystem:
+mkdir -p /mnt/cryptfs
+
+# Add to /etc/crypttab using the fixed key at $CRYPTFS_ROOT/key
+echo "cryptfs  $CRYPTFS_ROOT/disk  $CRYPTFS_ROOT/key  luks" >> /etc/crypttab
+
+# Add it to /etc/fstab so it restores after reboot
+echo "/dev/mapper/cryptfs  /mnt/cryptfs  ext4  defaults  0  1" >> /etc/fstab
+
+mkdir /home/pi/brokerClient
+
+# Loop through the paths that we'd like to be encrypted:
+for DIR_NAME in home/pi/brokerClient var/lib/docker
+do
+  echo "Adding bind mount for DIR_NAME=$DIR_NAME"
+  # Create the path on the encrypted filesystem (if it doesn't exist)
+  mkdir -p "/mnt/cryptfs/${DIR_NAME}"
+
+  # Create the path on the actual filesystem (if it doesn't exist)
+  mkdir -p "/$DIR_NAME"
+
+  # Add a bind mount entry to /etc/fstab for it:
+  echo "/mnt/cryptfs/${DIR_NAME} /$DIR_NAME none bind 0 0" >> /etc/fstab
+done
+
+#Finally, install docker. Docker must be installed AFTER the encrypted filesystem setup has completed.
+curl -sSL https://get.docker.com | sh
+
+#Add pi to the docker group
+sudo usermod -aG docker pi
+

@@ -1,0 +1,12 @@
+{
+  "keyNames": ["mailGunDomain", "mailGunApiKey", "adminEmail", "debugEmail"],
+  
+  "keyDisplay": ["MailGun Domain", "MailGun API Key", "Admin Email (CSV)", "Debug Email (CSV)"],
+  
+  "mailGunDomain": "",
+  "mailGunApiKey": "",
+  "adminEmail": "user@domain.com",
+  "debugEmail": "user@domain.com"
+  
+}
+    

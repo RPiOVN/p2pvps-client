@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>ConnextCMS Demo</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<link href="/styles/site.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <!-- <link href="//fonts.googleapis.com/css?family=Neucha" rel="stylesheet"> -->
+    <style>
+      /* cyrillic */
+      @font-face {
+        font-family: 'Neucha';
+        font-style: normal;
+        font-weight: 400;
+        /*src: local('Neucha'), url(http://fonts.gstatic.com/s/neucha/v8/kfCpWUYjzqqtPFESHGr73_esZW2xOQ-xsNqO47m55DA.woff2) format('woff2');*/
+        src: local('Neucha'), url(/fonts/Neucha-cyrillic.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+      }
+      /* latin */
+      @font-face {
+        font-family: 'Neucha';
+        font-style: normal;
+        font-weight: 400;
+        /*src: local('Neucha'), url(http://fonts.gstatic.com/s/neucha/v8/irvP3TB0tsoy_UMHmCQlTw.woff2) format('woff2');*/
+        src: local('Neucha'), url(/fonts/Neucha-latin.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+      }
+    </style>
+    
+		{{!-- This file provides the default styling for the KeystoneJS Content Editor
+			- only renders when user is logged in and admin--}}
+		{{{isAdminEditorCSS user}}}
+
+		{{!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+		//- Safely remove this block if you are not targeting IE8 --}}
+		<!--[if lt IE 9]>
+			<script src="//cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.js"></script>
+			<script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+	<body>
+    <!-- Create and show the pre-loader animation before anything else -->
+    <link rel="stylesheet" href="../styles/preloader.css">
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+    </div>
+    
+		<div id="header">
+			<div class="container">
+				<div role="navigation" class="navbar navbar-default navbar-static-top">
+					<div class="container-fluid" role='navigation'>
+						<div class="navbar-header">
+              
+							<a href='/' class='navbar-brand'>RPi Broker</a>
+              <!--
+              <a href='/'><img src="/images/skagit-connext-logo-50x50.png" style="height: 45px;" /></a>
+              -->
+              <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='.navbar-collapse'>
+                <span class='sr-only'>Toggle navigation</span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+              </button>
+              
+						</div>
+						
+            <ul class='nav navbar-nav navbar-right collapse navbar-collapse'>
+              <li><a href='/'>Home</a></li>
+              
+              <li class='dropdown' id="menuSection">
+                <!-- <a href='/#' data-target='#' class='dropdown-toggle' data-toggle='dropdown' data-hover='dropdown'>About <span class='caret'></span></a> -->
+                <a href='/#' data-target='#' class='dropdown-toggle' data-toggle='dropdown'>About <span class='caret'></span></a>
+                <ul class='dropdown-menu' role='menu'>
+                  <li id="menuPage"><a href='#'>Our Story</a></li>                  
+                </ul>
+              </li>
+
+              <!-- KeystoneJS default menu items. -->
+              <!--
+              <li class='dropdown'>
+                <!-- <a href='/#' data-target='#' class='dropdown-toggle' data-toggle='dropdown' data-hover='dropdown'>KeystoneLinks <span class='caret'></span></a>
+                <a href='/#' data-target='#' class='dropdown-toggle' data-toggle='dropdown'>KeystoneLinks <span class='caret'></span></a>
+                <ul class='dropdown-menu' role='menu'>
+                  {{# each navLinks}}
+									<li {{#ifeq ../section key}}class="active"{{else}}{{/ifeq}}>
+										<a href="{{ href }}">{{ label }}</a>
+									</li>
+								  {{/each}}                  
+                </ul>
+              </li>
+              -->
+              <li><a href="/blog">Blog</a></li>
+              
+              <!-- Sign-Out and Sign-In Menu link. -->
+              {{#if user}}
+              <li><a href="/keystone/signout">Sign Out</a></li>
+              {{else}}
+              <li><a href="/keystone/signin">Sign In</a></li>
+              {{/if}}
+              
+            </ul>
+            
+					</div>
+				</div>
+			</div>
+		</div>
+    
+    {{!--
+			//- jQuery 1.11.3 is included by default, and required by both Bootstrap
+			//- and the KeystoneJS Content Editor. If you are not targeting IE8,
+			//- you can upgrade to 2.1.4 (also bundled) for better performance.
+		--}}
+		<script src="/js/jquery/jquery-1.11.3.min.js"></script>
+    
+		<div id="body">
+			<!--
+				Flash messages allow you to display once-off status messages to users, e.g. form
+				validation errors, success messages, etc
+			-->
+			{{#if messages}}
+			<div id="flash-messages" class="container">
+				{{#if messages.info}}
+				<div class="alert alert-info">
+						{{{flashMessages messages.info}}}
+				</div>
+				{{/if}}
+				{{#if messages.success}}
+				<div class="alert alert-success">
+						{{{flashMessages messages.success}}}
+				</div>
+				{{/if}}
+				{{#if messages.warning}}
+				<div class="alert alert-warning">
+						{{{flashMessages messages.warning}}}
+				</div>
+				{{/if}}
+				{{#if messages.error}}
+				<div class="alert alert-danger">
+						{{{flashMessages messages.error}}}
+				</div>
+				{{/if}}
+			</div>
+			{{/if}}
+			<!-- The content block should contain the body of your template's content-->
+			{{{body}}}
+		</div>
+		<div class="container">
+			<div id="footer">
+				<p>Powered by <a href="http://keystonejs.com" target="_blank">KeystoneJS</a> and <a href="http://connextcms.com" target="_blank">ConnextCMS.</a></p>
+			</div>
+		</div>
+		
+		{{!--
+			//- Customise which Bootstrap javascript files are served by including
+			//- them specifically here, instead of bootstrap-3.3.5.min.js
+		--}}
+		<!-- <script src="/js/bootstrap/bootstrap-3.3.5.min.js"></script> -->
+    <script src="/js/lib/bootstrap.3.3.6.js"></script>
+    <!-- https://github.com/CWSpear/bootstrap-hover-dropdown -->
+    <script src="/js/bootstrap-hover-dropdown.min.js"></script>
+		{{{isAdminEditorJS user}}}
+    
+    <!-- Import server settings -->
+    <!-- <script src="/js/serversettings.js"></script> -->
+    
+    <!-- Generate the navigation menu -->
+    <script type="text/javascript">var section = {{{JSON section}}};</script>
+    <script src="/js/navMenu.js" type="text/javascript"></script>
+    
+    <!-- Hide the preloader after the page has loaded -->
+    <script type="text/javascript">
+      //Hide the preloader after everything finished loading and document is ready.
+      $(document).ready(function() {
+        $('#loader-wrapper').hide();
+      });
+    </script>
+    
+	</body>
+</html>

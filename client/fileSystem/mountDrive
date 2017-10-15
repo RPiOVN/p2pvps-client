@@ -1,0 +1,10 @@
+#!/bin/bash
+#This script mounts the USB flash drive. It assumes the device is located at /dev/sda1
+#This script must be run with sudo permission.
+#https://www.raspberrypi-spy.co.uk/2014/05/how-to-mount-a-usb-flash-disk-on-the-raspberry-pi/
+
+umount /dev/sda1
+mkdir /media/usb
+mount /dev/sda1 /media/usb
+chown -R pi:pi /media/usb
+

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Script to add a user to Linux system
+# Call with the following syntax: ./deluser <username>
+
+
+echo "UID: $(id -u)"
+echo "first arg: $1"
+
+if [ $(id -u) -eq 0 ]; then
+
+  deluser --remove-home $1
+
+else
+  echo "Only root may delete a user from the system"
+  exit 2
+fi

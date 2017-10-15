@@ -1,0 +1,87 @@
+<div class="container">
+  <h1>RPi-Tracker Control Panel</h1>
+
+  <div class="row">
+    <div class="span4">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Log Files</a></li>
+        <li><a href="#tab2" data-toggle="tab">WiFi</a></li>
+        <li><a href="#tab3" data-toggle="tab">Settings</a></li>
+      </ul>
+
+      <div class="tab-content" >
+        
+        <div class="tab-pane active" id="tab1">
+          <p>This tab should automatically load with a list of the available log files.</p>
+          
+          <!-- Prototype table that is filled in with log files -->
+          <table class="table table-striped"> 
+            <thead> 
+              <tr> 
+                <th>Date</th> 
+                <th>JSON LS</th> 
+                <th>JSON PT</th> 
+                <th>KML LS</th>
+                <th>KML PT</th>
+              </tr> 
+            </thead> 
+            <tbody id="logTable"> 
+              <tr id="logRow" hidden> 
+                <th scope=row></th> 
+                <td class="JLS"></td> 
+                <td class="JPT"></td> 
+                <td class="KLS"></td> 
+                <td class="KPT"></td> 
+              </tr> 
+            </tbody> 
+          </table>
+        </div>
+
+        <div class="tab-pane" id="tab2">
+          <p>This tab will allow the user to control the WiFi settings, switching back and forth between <b>wireless client</b> and <b>access point</b> modes.</p>
+        </div>
+
+        <div class="tab-pane" id="tab3">
+          <p>This tab will allow the user to set general settings.</p>
+        </div>
+        
+      </div> <!-- /tab-content -->
+    </div>
+
+  </div> <!-- /row -->
+</div>
+
+<script type=text/javascript>
+  $(document).ready(function() {
+    debugger;
+    $.get('/listLogFiles', '', function(data) {
+      debugger;
+      
+      var fileList = data;
+      
+      for( var i = 0; i < fileList.length; i++ ) {
+      
+        //Clone the example row provided in the template.
+        var tempRow = $('#logRow').clone();
+
+        //Clear the ID copied from the example row.
+        tempRow.attr('id', '');
+
+        //Populate the new row with data from the model.
+        var fileDate = data[i].slice(18,28);
+        tempRow.find('th').text(fileDate);
+        tempRow.find('.JLS').html('<a href="/logfiles/'+fileDate+'-LS.json" download>JLS</a>');
+        tempRow.find('.JPT').html('<a href="/logfiles/'+fileDate+'-PT.json" download>JPT</a>');
+        tempRow.find('.KLS').html('<a href="/logfiles/'+fileDate+'-LS.kml" download>KLS</a>');
+        tempRow.find('.KPT').html('<a href="/logfiles/'+fileDate+'-PT.kml" download>KPT</a>');
+
+        //Remove the 'hidden' attribute copied from the example row.
+        tempRow.show();
+
+        //Append the new row to the DOM.
+        $('#logTable').append(tempRow);
+      }
+      
+    });
+  })
+</script>

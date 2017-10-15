@@ -1,0 +1,2 @@
+#!/bin/bash
+docker container run --name child-shell --rm -it child-shell /bin/bash

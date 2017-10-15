@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+        Ports Rented:
+      </p>
+      <div class="jumbotron" id="portList">
+      
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-primary" onclick="getPort()">Rent Port</button>
+    </div>  
+  </div>
+</div>
+
+<script type="text/javascript">
+  function getPort() {
+    //debugger;
+    
+    $.get('/rentPort', '', function(data) {
+      //debugger;
+      
+      $('#portList').append('<button class="btn" onclick=releasePort("'+data.port+'") id="btn'+data.port+'">'+data.port+'</button>');
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      debugger;
+    });
+  }
+  
+  function releasePort(port) {
+    //debugger;
+    
+    //Error handling
+    if((port == undefined) || (port == ""))
+      return;
+    
+    var obj = {};
+    obj.port = Number(port);
+    
+    $.get('/returnPort', obj, function(data) {
+      debugger;
+      
+      if(data) {
+        $('#btn'+port).remove();
+      }
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+      debugger;
+    });
+    
+  }
+</script>

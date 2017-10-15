@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#Copy the SSH config file to stop the irritating key prompt
+#cp config ~/.ssh/
+
+#Run the docker image
+docker run -d --rm --name ssh-shell -p 6100:6100 sshd-container
+

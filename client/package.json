@@ -1,0 +1,30 @@
+{
+  "name": "rpibroker",
+  "version": "1.0.0",
+  "description": "Client for RPiBroker marketplace",
+  "main": "registerDevice.js",
+  "dependencies": {
+    "express": "^4.15.4",
+    "express3-handlebars": "^0.5.2",
+    "node-promise": "^0.5.12",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RPiOVN/rpibroker.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi"
+  ],
+  "author": "Chris Troutner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RPiOVN/rpibroker/issues"
+  },
+  "homepage": "https://github.com/RPiOVN/rpibroker#readme"
+}

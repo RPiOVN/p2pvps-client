@@ -1,0 +1,425 @@
+<div class="container">
+  <h1>RPi-Tracker Control Panel</h1>
+
+  <div class="row">
+    <div class="span4">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Log Files</a></li>
+        <li><a href="#tab2" data-toggle="tab">Settings</a></li>
+        <li><a href="#tab3" data-toggle="tab">WiFi</a></li>
+        <li><a href="#tab4" data-toggle="tab">Diagnostics</a></li>
+      </ul>
+
+      <div class="tab-content" >
+        
+        <!-- START LOG FILES TAB -->
+        <div class="tab-pane active" id="tab1">
+        
+          <div class="row">
+            <div class="col-xs-12">
+              <a class="btn btn-warning center-block" href="#/" role="button" id="trackingControlBtn">Stop Tracking</a>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-12">
+              <form>
+                
+                <div class="form-group">
+                  <label for="logFile">Select a Log File:</label>
+                  <select class="form-control" name="logFile" id="logFile">
+                    <option value="" hidden></option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="fileFormat">Select a Format:</label>
+                  <select class="form-control" name="fileFormat" id="fileFormat">
+                    <option value="KLS">KML Line String</option>
+                    <option value="GLS">GeoJSON Line String</option>
+                    <option value="KPT">KML Point with Timestamp</option>
+                    <option value="GPT">GeoJSON Point with Timestamp</option>
+                  </select>
+                </div>
+            </form>
+            </div>            
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-6">
+              <a class="btn btn-danger center-block" href="#/" role="button" id="deleteLogBtn">Delete</a>
+            </div>
+            
+            <div class="col-xs-6">
+              <a class="btn btn-success center-block" href="#/" role="button" id="downloadLogBtn">Download</a>
+            </div>
+          </div>
+          
+        </div>
+        <!-- END LOG FILES TAB -->
+
+        <!-- START SETTINGS TAB -->
+        <div class="tab-pane" id="tab2">
+          <h2>Device Settings</h2>
+
+          <h3>GPS Logging</h3>
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="gpsDataLogTimeout" class="col-sm-2 control-label">GPS Data Logging Interval</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="gpsDataLogTimeout" placeholder="30000">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="gpsFileSaveTimeoutCnt" class="col-sm-2 control-label">Logging Intervals Between File Saves</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="gpsFileSaveTimeoutCnt" placeholder="4">
+              </div> 
+            </div>
+              
+          </form>
+          
+          <hr style="border-top: 3px solid #000;">
+          
+          <h3>Map Tracks Server Settings</h3>
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="userId" class="col-sm-2 control-label">User ID</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="userId" placeholder="">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-2">
+                <button class="btn btn-primary" type="button" id="syncFiles">Sync Files</button>
+              </div>
+              
+              <div class="col-sm-offset-2 col-sm-4">
+                <input type="checkbox" name="autosync" id="autosync" value="autosync">
+				        <label class="checkbox inline" for="autosync"><span></span>Sync on boot</label>
+              </div>
+            </div>
+          </form>
+
+          <hr style="border-top: 3px solid #000;">
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="text-center">
+                  <button type="button" class="btn btn-success" id="saveSettings">Save Settings</button>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+          <hr style="border-top: 5px solid #000;">
+          
+          <div class="row">
+            <div class="col-sm-12">
+              <h3>Update RPi-Tracker Software</h3>
+              <p>
+                Clicking the button below will download the latest RPi-Tracker code from 
+                <a href="https://github.com/christroutner/RPi-Tracker" target="_blank">the GitHub repository</a>.
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-offset-5 col-sm-2">
+              <button class="btn btn-success" type="button" id="updateSoftwareBtn">Update RPi-Tracker Software</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-offset-5 col-sm-2">
+              <button class="btn btn-success" type="button" id="rebootBtn">Reboot Device</button>
+            </div>
+          </div>
+          
+          
+        </div>
+        <!-- END SETTINGS TAB -->
+
+        
+        <!-- START WIFI CONFIGURATION TAB -->
+        <div class="tab-pane" id="tab3">
+          
+          <p>
+            This tab allows you to control the WiFi settings. You can use these settings to switch the Raspberry Pi
+            between <b>wireless client</b> and <b>access point</b> (AP) modes. An AP mode allows the Raspberry Pi to function
+            as a wireless router, allowing cell phones and laptops to connect to it directly over WiFi. However, in
+            AP mode, the device will not be able to connect to the internet. To connect to the internet, you'll need
+            to configure the Raspberry Pi as a wireless client and fill in the information in needs to connect to
+            your local WiFi router.
+          </p>
+          
+          <div class="row text-center">
+            <h2>RPi Configured As:</h2>
+            <form class="form-inline">
+              <div class="form-group" id="wifiCheckboxes">
+               
+                <input type="checkbox" name="optionsCheckbox1" id="optionsCheckbox1" value="AP">
+				        <label class="checkbox inline" for="optionsCheckbox1"><span></span>Access Point</label>
+                
+                <input type="checkbox" name="optionsCheckbox2" id="optionsCheckbox2" value="client">
+				        <label class="checkbox inline" for="optionsCheckbox2"><span></span>Wireless Client</label>
+                
+              </div>
+            </form>
+          </div>
+          
+          <div class="row">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      AP Settings
+                    </a>
+                  </h4>
+                </div>
+                <!-- <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"> -->
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="panel-body">
+                    <p>
+                      Making the Raspberry Pi an Access Point will turn it into a WiFi hostspot, according to the settings below:
+                    </p>
+                    
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label for="apSSID" class="col-xs-4 control-label">SSID:</label>
+                        <div class="col-xs-8">
+                          <input type="text" class="form-control" id="apSSID" placeholder="Hotspot Name">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="apPSK" class="col-xs-4 control-label">PSK:</label>
+                        <div class="col-xs-8">
+                          <input type="text" class="form-control" id="apPSK" placeholder="Password">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="apChannel" class="col-xs-4 control-label">Channel:</label>
+                        <div class="col-xs-8">
+                          <input type="text" class="form-control" id="apChannel" placeholder="6" value="6">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="apEncryption" class="col-xs-4 control-label">Encryption Type:</label>
+                        <div class="col-xs-8">
+                          <input type="text" class="form-control" id="apEncryption" value="WPA-PSK" readonly>
+                        </div>
+                      </div>                      
+                    </form>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                  <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      WiFi Client Settings
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                  <div class="panel-body">
+                    <p>
+                      Making the Raspberry Pi a WiFi Client will allow it connect to the internet. Tell it how to 
+                      connect to your local WiFi Hotspot by filling out the settings below. Selecting a previously
+                      saved Hotspot will allow you to edit its information.
+                    </p>
+                    
+                    <form class="form-horizontal">
+                      
+                      <div class="form-group">                        
+                        <label for="savedClients" class="col-xs-4 control-label">Saved Settings:</label>
+                        <div class="col-xs-8">
+                          <select name="savedClients" id="savedClients">
+                            <option value=""></option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">                        
+                        <label for="clientSSID" class="col-xs-4 control-label">SSID:</label>
+                        <div class="col-xs-8">
+                          <input type="text" name="clientSSID" id="clientSSID" placeholder="Hotspot Name" list="clientSSIDList"/>
+                          <datalist id="clientSSIDList">
+                              <option value=""></option>
+                          </datalist>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="clientPSK" class="col-xs-4 control-label">PSK:</label>
+                        <div class="col-xs-8">
+                          <input type="text" name="clientPSK" id="clientPSK" placeholder="Password" list="clientPSKList"/>
+                          <datalist id="clientPSKList">
+                              <option value="">
+                          </datalist>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="clientEncryption" class="col-xs-4 control-label">Encryption Type:</label>
+                        <div class="col-xs-8">
+                          <select name="clientEncryption" id="clientEncryption">
+                            <option value="WPA-PSK">WPA-PSK</option>
+                            <option value="WPA2-PSK">WPA2-PSK</option>
+                            <option value="WEP">WEP</option>
+                            <option value="None">No Encryption</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <br>
+                      <div class="row">
+                        <div class="col-xs-12 col-md-offset-2 col-md-6">
+                          <ul>
+                            <li>
+                              Most WiFi routers today use WPA-PSK or WPS2-PSK encryption. Only change the encryption type
+                              if the default doesn't seem to be working.
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      
+                    </form>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-12">
+              <a class="btn btn-success center-block" href="#/" role="button" id="wifiBtn">Save Settings</a>
+            </div>
+          </div>
+        </div>
+        <!-- START WIFI CONFIGURATION TAB -->
+        
+        <!-- START Debug TAB -->
+        <div class="tab-pane" id="tab4">
+          
+          <form class="form-horizontal">  
+            <div class="form-group">                        
+              <label for="localIp" class="col-xs-3 control-label">Local IP:</label>
+              <div class="col-xs-9">
+                <input type="text" class="form-control" name="localIp" id="localIp" placeholder="">
+              </div>
+            </div>
+            
+            <div class="form-group">                        
+              <label for="globalIp" class="col-xs-3 control-label">Global IP:</label>
+              <div class="col-xs-9">
+                <input type="text" class="form-control" name="globalIp" id="globalIp" placeholder="">
+              </div>
+            </div>
+            
+            <div class="form-group">                        
+              <label for="timestampIp" class="col-xs-3 control-label">IP Updated:</label>
+              <div class="col-xs-9">
+                <input type="text" class="form-control" name="timestampIp" id="timestampIp" placeholder="">
+              </div>
+            </div>
+            
+            <!--
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9 col-xs-12">
+                <input type="checkbox" name="reverseSsh" id="reverseSsh" value="reverseSsh">
+                <label class="checkbox inline" for="reverseSsh"><span></span>Enable Reverse SSH</label>
+                
+                <p>
+                  Enabling Reverse SSH will allow a technician to connect directly to your device in order
+                  to update software and do any repairs. This box should be unchecked unless you have specifically
+                  been asked to turn it on by CrumbShare staff.
+                </p>
+              </div>
+            </div>
+            -->
+
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9 col-xs-12">
+                <input type="checkbox" name="saveLogs" id="saveLogs" value="saveLogs" checked>
+                <label class="checkbox inline" for="saveLogs"><span></span>Save Log Files</label>                
+                <p>
+                  Saving log files makes it possible for a technician to debug issues on your device.
+                  However, log files take up hard drive space. This should be checked unless hard drive
+                  space is an issue.
+                </p>
+              </div>
+            </div>
+          </form>
+          
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <p>This tab is refreshed every 10 seconds with the last 50 lines of the PM2 log. The newest entries will show up at the top.</p>
+              <div class="jumbotron" id="consoleLog">
+                <p>Data will show up here.</p>
+              </div>
+            </div>
+          </div>
+          
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <p>
+                This command line interface (CLI) allows you to issue commands directly to the Linux operating system.
+                The default user is <b>pi</b> with default password <b>raspberry</b>.
+              </p>
+              <p>
+                Wait a few seconds for the window below to resolve. It takes time for the RPi to identify it's own IP address.
+              </p>
+              
+              <!-- 16:9 aspect ratio -->
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="http://localhost:3002/" id="commandLine"></iframe>
+              </div>
+
+            </div>
+          </div>
+          
+          <!--
+          <div class="row">
+            <div class="col-md-12">
+              <a class="btn btn-success center-block" href="#/" role="button" id="testLog">Test Log</a>
+            </div>
+          </div>
+          -->
+        </div>
+        <!-- END Debug TAB -->
+        
+      </div> <!-- /tab-content -->
+    </div>
+
+  </div> <!-- /row -->
+</div>
+
+<div class="modal" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="mainModalTitle">Modal title</h4>
+      </div>
+      <div class="modal-body" id="mainModalBody">
+        <img class="img-responsive center-block" src="/img/waiting.gif" id="waitingGif" />
+      </div>
+      <div class="modal-footer" id="mainModalFooter">
+        <button type="button" class="btn btn-default" id="mainModalBtn1" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="mainModalBtn2" >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type=text/javascript src="/app.js"></script>

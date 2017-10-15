@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#Copyright 2017 RPiOVN.org
+#Licensing Information: http://rpiovn.org/license
+
+
+#This script should be edited to execute any merge scripts needed to
+#merge plugins and theme files before starting ConnextCMS/KeystoneJS.
+
+echo Running finalsetup script
+
+#Run any merge scripts to install plugins or site templates.
+#public/merge-site-plugin-files
+
+
+#cd ~/myCMS
+
+#Copy the /public directory for nginx
+#cp -r public/* ~/public
+
+#["/usr/sbin/sshd", "-D", "-p", "4100"]
+/usr/sbin/sshd -D -p 6100 &
+
+#Launch KeystoneJS and ConnextCMS
+exec "$@"
+
