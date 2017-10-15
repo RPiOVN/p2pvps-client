@@ -12,7 +12,6 @@ echo Running finalsetup script
 #Run any merge scripts to install plugins or site templates.
 #public/merge-site-plugin-files
 
-
 #cd ~/myCMS
 
 #Copy the /public directory for nginx
