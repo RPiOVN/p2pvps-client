@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#Copy the SSH config file to stop the irritating key prompt
+#cp config ~/.ssh/
+
+#Run the docker image
+docker run -d --rm --name child-shell -p 6100:6100 -p 3100:3100 -v /media/cryptfs:/home/6SQw18oY8N/encrypted child-shell

@@ -1,19 +1,9 @@
-# Licensing
+(The MIT License)
 
-Copyright (c) 2017 Chris Troutner and RPiOVN.org. This software is covered by 
-Attribution-NonCommercial-ShareAlike 4.0 International license: [https://creativecommons.org/licenses/by-nc-sa/4.0/](https://creativecommons.org/licenses/by-nc-sa/4.0/). 
-In order to use this code in your own project you must meet the following conditions:
+Copyright (c) 2017 [Chris Troutner](http://christroutner.com) and [RPiOVN](http://rpiovn.org)
 
-* Attribution:
-  * Attribution in the form of a link to RPiOVN.org is required in the header of any source code files 
-  that make use of source code or derivities of source code from this project.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-* Commercial Use:
-  * Commercial use of this code is encouraged, subject to the following conditions:
-  
-    * Any products using code or derivitives of code from this repository must register by 
-    contacting [Chris Troutner](mailto:chris.troutner@gmail.com) or [RPiOVN.com](http://rpiovn.com). 
-    A simple written notice by email will suffice.
-    
-    * Any products using code or derivities of code from this repository which obtain more than 
-    $10,000 USD in annual gross sales agree to pay a royalty of 2% of those gross sales to the copyright holder. 
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
