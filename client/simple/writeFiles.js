@@ -41,15 +41,14 @@ function Constructor() {
         "RUN npm install reverse-tunnel-ssh\n"+
         "RUN useradd -ms /bin/bash "+username+"\n"+
         "RUN echo "+username+":"+password+" | chpasswd\n"+
-        "VOLUME /home/"+username+"/encrypted\n"+
         "EXPOSE "+port+"\n"+
         "EXPOSE 3100\n"+
         "COPY dummyapp.js dummyapp.js\n"+
         "COPY finalsetup finalsetup\n"+
         "COPY reverse-tunnel-generated.js reverse-tunnel.js\n"+
         "RUN chmod 775 finalsetup\n"+
-        //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
-        "ENTRYPOINT [\"./finalsetup\", \"node\", \"reverse-tunnel.js\"]\n";
+        "ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
+        //"ENTRYPOINT [\"./finalsetup\", \"node\", \"reverse-tunnel.js\"]\n";
 
 
     fs.writeFile('./Dockerfile', fileString, function (err) {
