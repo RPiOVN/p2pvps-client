@@ -1,2 +1,0 @@
-#!/bin/bash
-docker container run --name sshd-shell --rm -it sshd-container /bin/bash
