@@ -14,14 +14,12 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
 RUN npm install express
 RUN npm install reverse-tunnel-ssh
-RUN useradd -ms /bin/bash 6SQw18oY8N
-RUN echo 6SQw18oY8N:5buHj2ui4i | chpasswd
-VOLUME /home/6SQw18oY8N/encrypted
-EXPOSE 6018
+RUN useradd -ms /bin/bash ammmIjZZhl
+RUN echo ammmIjZZhl:5qteBqLAmk | chpasswd
+EXPOSE 6001
 EXPOSE 3100
 COPY dummyapp.js dummyapp.js
 COPY finalsetup finalsetup
 COPY reverse-tunnel-generated.js reverse-tunnel.js
 RUN chmod 775 finalsetup
-#ENTRYPOINT ["./finalsetup", "node", "reverse-tunnel.js"]
 ENTRYPOINT ["./finalsetup", "node", "dummyapp.js"]
