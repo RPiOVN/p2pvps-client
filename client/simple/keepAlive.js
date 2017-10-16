@@ -1,5 +1,3 @@
-//tunnel is a ssh2 clientConnection object
-var tunnel = require('reverse-tunnel-ssh');
 
 var request = require('request'); //Used for CURL style requests.
 var express = require('express');
