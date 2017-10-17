@@ -4,10 +4,10 @@ var express = require('express');
 var Promise = require('node-promise');
 
 // Global configuration
-//global.serverIp = "192.168.2.2";
-global.serverIp = "localhost";
+global.serverIp = "192.241.214.57";
+//global.serverIp = "localhost";
 global.serverPort = "3000";
-global.GUID = "59e3e8fd9fea3a007ff72af5";
+global.GUID = "59e58bdee3627a0001a83d9d";
 
 
 var app = express();
