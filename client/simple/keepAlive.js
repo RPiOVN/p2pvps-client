@@ -101,5 +101,5 @@ var checkInTimer = setInterval(function() {
 
   });
 
-}, 10000);
+}, 120000);
 
