@@ -33,9 +33,13 @@ RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
 #RUN npm install -g npm
+
+#Install npm dependencies
 #RUN npm install express
 #RUN npm install reverse-tunnel-ssh
-
+WORKDIR /root
+COPY package.json package.json
+RUN npm install
 
 #Create the user and add them to the sudo group.
 RUN useradd -ms /bin/bash testuser
