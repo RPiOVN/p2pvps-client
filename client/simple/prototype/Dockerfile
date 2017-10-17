@@ -33,8 +33,8 @@ RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
 #RUN npm install -g npm
-RUN npm install express
-RUN npm install reverse-tunnel-ssh
+#RUN npm install express
+#RUN npm install reverse-tunnel-ssh
 
 
 #Create the user and add them to the sudo group.
@@ -53,6 +53,7 @@ EXPOSE 3100
 COPY dummyapp.js dummyapp.js
 COPY finalsetup finalsetup
 COPY connectClient.js connectClient.js
+COPY package.json package.json
 RUN chmod 775 finalsetup
 
 ENTRYPOINT ["./finalsetup", "node", "dummyapp.js"]
