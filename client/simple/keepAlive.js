@@ -63,61 +63,43 @@ obj.internetSpeed = "Fake Test Data";
 var now = new Date();
 obj.checkinTimeStamp = now.toISOString();
 
+var checkInTimer = setInterval(function() {
 
-//Register with the server by sending the benchmark data.
-request.get(
-  {
-    url: 'http://'+global.serverIp+':'+global.serverPort+'/api/deviceCheckIn/'+global.GUID, 
-    // form: obj
-  },
-	function (error, response, body) {
+  //Register with the server by sending the benchmark data.
+  request.get(
+    {
+      url: 'http://'+global.serverIp+':'+global.serverPort+'/api/deviceCheckIn/'+global.GUID, 
+      // form: obj
+    },
+    function (error, response, body) {
 
-	try {
-    debugger;
-    //If the request was successfull, the server will respond with username, password, and port to be
-    //used to build the Docker file.
-    if (!error && response.statusCode == 200) {
+    try {
       debugger;
-
-      //Convert the data from a string into a JSON object.
-      var data = JSON.parse(body); //Convert the returned JSON to a JSON string.
-
-      /*
-      console.log('Username: '+data.clientData.username);
-      console.log('Password: '+data.clientData.password);
-      console.log('Port: '+data.clientData.port);
-      
-      var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
-      
-      promiseRT.then( function(results) {
-        //debugger;
-        
-        var promiseDockerfile = global.writeFiles.writeDockerfile(data.clientData.port, data.clientData.username, data.clientData.password);
-        
-        promiseDockerfile.then( function(results) {
-          //debugger;
-
-          console.log('Dockerfile and reverse-tunnel-generated.js successfully written.')
-
-        }, function(error) {
-          debugger;
-          console.error('Error resolving promise. Error: ', error);
-        });
-        
-      }, function(error) {
+      //If the request was successfull, the server will respond with username, password, and port to be
+      //used to build the Docker file.
+      if (!error && response.statusCode == 200) {
         debugger;
-        console.error('Error resolving promise. Error: ', error);
-      });
-      */
-    } else {
-      debugger;
 
-      console.error('Server responded with error when trying to register the device: ',error);
-      console.error('Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace.');
+        //Convert the data from a string into a JSON object.
+        var data = JSON.parse(body); //Convert the returned JSON to a JSON string.
+
+        if(data.success) {
+          // console.log('check-in succeeded.');
+        } else {
+          console.error('Check-in failed for '+global.GUID);
+        }
+
+      } else {
+        debugger;
+
+        console.error('Server responded with error when trying to register the device: ',error);
+        console.error('Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace.');
+      }
+    } catch(err) {
+      console.log('rpiBroker.js exiting with error:'+err);
     }
-	} catch(err) {
-		console.log('rpiBroker.js exiting with error:'+err);
-	}
 
-});
+  });
+
+}, 10000);
 
