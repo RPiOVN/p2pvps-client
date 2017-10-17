@@ -85,7 +85,8 @@ var checkInTimer = setInterval(function() {
         var data = JSON.parse(body); //Convert the returned JSON to a JSON string.
 
         if(data.success) {
-          // console.log('check-in succeeded.');
+          var now = new Date();
+          console.log('Checked in for device '+global.GUID+' at '+now.toLocaleString());
         } else {
           console.error('Check-in failed for '+global.GUID);
         }
@@ -119,5 +120,7 @@ tunnel({
 }, function(error, clientConnection) {
   if(error)
     console.error('Error! ', error);
-
+  else {
+    console.log('Reverse tunnel established on destination port '+global.sshTunnelPort);
+  }
 });

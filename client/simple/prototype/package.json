@@ -7,7 +7,8 @@
     "express": "^4.16.2",
     "express3-handlebars": "^0.5.2",
     "node-promise": "^0.5.12",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "reverse-tunnel-ssh": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
