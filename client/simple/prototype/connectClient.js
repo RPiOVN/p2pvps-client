@@ -10,8 +10,8 @@ var express = require('express');
 var Promise = require('node-promise');
 
 // Global configuration
-//global.serverIp = "192.241.214.57";
-global.serverIp = "p2pvps.net";
+global.serverIp = "192.241.214.57";
+//global.serverIp = "p2pvps.net";
 global.serverPort = "3000";
 global.GUID = "59e58bdee3627a0001a83d9d";
 global.sshServer = '45.55.12.52';
@@ -74,36 +74,36 @@ var checkInTimer = setInterval(function() {
     },
     function (error, response, body) {
 
-    try {
-      debugger;
-      //If the request was successfull, the server will respond with username, password, and port to be
-      //used to build the Docker file.
-      if (!error && response.statusCode == 200) {
+      try {
         debugger;
+        //If the request was successfull, the server will respond with username, password, and port to be
+        //used to build the Docker file.
+        if (!error && response.statusCode == 200) {
+          debugger;
 
-        //Convert the data from a string into a JSON object.
-        var data = JSON.parse(body); //Convert the returned JSON to a JSON string.
+          //Convert the data from a string into a JSON object.
+          var data = JSON.parse(body); //Convert the returned JSON to a JSON string.
 
-        if(data.success) {
-          var now = new Date();
-          console.log('Checked in for device '+global.GUID+' at '+now.toLocaleString());
+          if(data.success) {
+            var now = new Date();
+            console.log('Checked in for device '+global.GUID+' at '+now.toLocaleString());
+          } else {
+            console.error('Check-in failed for '+global.GUID);
+          }
+
         } else {
-          console.error('Check-in failed for '+global.GUID);
+          debugger;
+
+          console.error('Server responded with error when trying to register the device: ',error);
+          console.error('Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace.');
         }
-
-      } else {
-        debugger;
-
-        console.error('Server responded with error when trying to register the device: ',error);
-        console.error('Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace.');
+      } catch(err) {
+        console.log('rpiBroker.js exiting with error:'+err);
       }
-    } catch(err) {
-      console.log('rpiBroker.js exiting with error:'+err);
-    }
 
-  });
+    });
 
-}, 120000);
+}, 12000);
 
 
 
