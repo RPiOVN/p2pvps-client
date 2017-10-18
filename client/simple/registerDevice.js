@@ -138,9 +138,10 @@ request.post(
       console.log('Password: '+data.clientData.password);
       console.log('Port: '+data.clientData.port);
       
-      var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
+      //var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
+      var promiseClientConfig = global.writeFiles.writeClientConfig(data.clientData.port);
       
-      promiseRT.then( function(results) {
+      promiseClientConfig.then( function(results) {
         //debugger;
         
         var promiseDockerfile = global.writeFiles.writeDockerfile(data.clientData.port, data.clientData.username, data.clientData.password);
