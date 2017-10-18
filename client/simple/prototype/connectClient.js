@@ -9,15 +9,25 @@ var request = require('request');           //Used for CURL style requests.
 var express = require('express');
 var Promise = require('node-promise');
 
-// Global configuration
+/*
+// Global configuration defaults
 global.serverIp = "192.241.214.57";
 //global.serverIp = "p2pvps.net";
 global.serverPort = "3000";
-global.GUID = "59e58bdee3627a0001a83d9d";
+//global.GUID = "59e58bdee3627a0001a83d9d";
 global.sshServer = '174.138.35.118';
 global.sshServerPort = 6100;
 global.sshTunnelPort = 6101;
+*/
+global.config = false;
 
+try {
+  global.config = require('./config.json'); 
+  console.log('Registering device ID '+global.config.deviceId);
+} catch(err) {
+  console.error('Could not open the config.json file!', err);
+  process.exit(1);
+}
 
 var app = express();
 var port = 4010;
@@ -69,7 +79,7 @@ var checkInTimer = setInterval(function() {
   //Register with the server by sending the benchmark data.
   request.get(
     {
-      url: 'http://'+global.serverIp+':'+global.serverPort+'/api/deviceCheckIn/'+global.GUID, 
+      url: 'http://'+global.config.serverIp+':'+global.config.serverPort+'/api/deviceCheckIn/'+global.config.deviceId, 
       // form: obj
     },
     function (error, response, body) {
@@ -86,9 +96,9 @@ var checkInTimer = setInterval(function() {
 
           if(data.success) {
             var now = new Date();
-            console.log('Checked in for device '+global.GUID+' at '+now.toLocaleString());
+            console.log('Checked in for device '+global.config.deviceId+' at '+now.toLocaleString());
           } else {
-            console.error('Check-in failed for '+global.GUID);
+            console.error('Check-in failed for '+global.config.deviceId);
           }
 
         } else {
@@ -109,18 +119,18 @@ var checkInTimer = setInterval(function() {
 
 // Establish a reverse SSH connection.
 tunnel({
-  host: global.sshServer,
-  port: global.sshServerPort, //The SSH port on the server.
+  host: global.config.sshServer,
+  port: global.config.sshServerPort, //The SSH port on the server.
   username: 'sshuser',
   password: 'sshuserpassword',
   dstHost: '0.0.0.0', // bind to all IPv4 interfaces
-  dstPort: global.sshTunnelPort, //The new port that will be opened
+  dstPort: global.config.sshTunnelPort, //The new port that will be opened
   //srcHost: '127.0.0.1', // default
   srcPort: 3100 // The port on the Pi to tunnel to.
 }, function(error, clientConnection) {
   if(error)
     console.error('Error! ', error);
   else {
-    console.log('Reverse tunnel established on destination port '+global.sshTunnelPort);
+    console.log('Reverse tunnel established on destination port '+global.config.sshTunnelPort);
   }
 });
