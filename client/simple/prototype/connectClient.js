@@ -14,7 +14,7 @@ global.serverIp = "192.241.214.57";
 //global.serverIp = "p2pvps.net";
 global.serverPort = "3000";
 global.GUID = "59e58bdee3627a0001a83d9d";
-global.sshServer = '45.55.12.52';
+global.sshServer = '174.138.35.118';
 global.sshServerPort = 6100;
 global.sshTunnelPort = 6101;
 
