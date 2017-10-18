@@ -149,7 +149,7 @@ request.post(
         promiseDockerfile.then( function(results) {
           //debugger;
 
-          console.log('Dockerfile and reverse-tunnel-generated.js successfully written.')
+          console.log('All files written out successfully.')
 
         }, function(error) {
           debugger;
