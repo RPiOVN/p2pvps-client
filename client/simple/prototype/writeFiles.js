@@ -118,7 +118,7 @@ function Constructor() {
       '"serverPort": "3000",\n'+
       '"sshServer": "174.138.35.118",\n'+
       '"sshServerPort": 6100,\n'+
-      '"sshTunnelPort": 6101\n'+
+      '"sshTunnelPort": '+port+'\n'+
       '}\n';
 
     fs.writeFile('./test-config.js', fileString, function (err) {
