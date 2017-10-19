@@ -47,6 +47,9 @@ function Constructor() {
         "EXPOSE 3100\n"+
         "COPY dummyapp.js dummyapp.js\n"+
         "COPY finalsetup finalsetup\n"+
+        "COPY connectClient.js connectClient.js\n"+
+        "COPY package.json package.json\n"+
+        "COPY config.json config.json\n"+
         "COPY reverse-tunnel-generated.js reverse-tunnel.js\n"+
         "RUN chmod 775 finalsetup\n"+
         //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
@@ -122,7 +125,7 @@ function Constructor() {
       '"sshTunnelPort": 6101\n'+
       '}\n';
 
-    fs.writeFile('./test-config.js', fileString, function (err) {
+    fs.writeFile('./config.json', fileString, function (err) {
 
       if(err) {
         debugger;
