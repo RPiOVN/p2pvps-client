@@ -149,7 +149,8 @@ request.post(
         promiseDockerfile.then( function(results) {
           //debugger;
 
-          console.log('All files written out successfully.')
+          console.log('All files written out successfully.');
+          process.exit(1);
 
         }, function(error) {
           debugger;
