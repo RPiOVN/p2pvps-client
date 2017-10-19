@@ -12,14 +12,18 @@ RUN curl -sL https://deb.nodesource.com/setup_4.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
-RUN npm install express
-RUN npm install reverse-tunnel-ssh
-RUN useradd -ms /bin/bash WI4mljaHzC
-RUN echo WI4mljaHzC:C64BWtx6bI | chpasswd
-EXPOSE 6002
+WORKDIR /root
+COPY package.json package.json
+RUN npm install
+RUN useradd -ms /bin/bash 8IWoUmridt
+RUN echo 8IWoUmridt:0JVL3Bg7O8 | chpasswd
+EXPOSE 6003
 EXPOSE 3100
 COPY dummyapp.js dummyapp.js
 COPY finalsetup finalsetup
+COPY connectClient.js connectClient.js
+COPY package.json package.json
+COPY config.json config.json
 COPY reverse-tunnel-generated.js reverse-tunnel.js
 RUN chmod 775 finalsetup
 ENTRYPOINT ["./finalsetup", "node", "dummyapp.js"]
