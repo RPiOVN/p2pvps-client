@@ -41,9 +41,6 @@ function Constructor() {
         "WORKDIR /root\n"+
         "COPY package.json package.json\n"+
         "RUN npm install\n"+
-        "RUN useradd -ms /bin/bash "+username+"\n"+
-        "RUN echo "+username+":"+password+" | chpasswd\n"+
-        "EXPOSE "+port+"\n"+
         "EXPOSE 3100\n"+
         "COPY dummyapp.js dummyapp.js\n"+
         "COPY finalsetup finalsetup\n"+
@@ -52,8 +49,11 @@ function Constructor() {
         "COPY config.json config.json\n"+
         "COPY reverse-tunnel-generated.js reverse-tunnel.js\n"+
         "RUN chmod 775 finalsetup\n"+
-        "ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
-        //"ENTRYPOINT [\"./finalsetup\", \"node\", \"reverse-tunnel.js\"]\n";
+        "RUN useradd -ms /bin/bash "+username+"\n"+
+        "RUN echo "+username+":"+password+" | chpasswd\n"+
+        "EXPOSE "+port+"\n"+
+        //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
+        "ENTRYPOINT [\"./finalsetup\", \"node\", \"connectClient.js\"]\n";
 
 
     fs.writeFile('./Dockerfile', fileString, function (err) {
