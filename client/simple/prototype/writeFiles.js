@@ -112,7 +112,7 @@ function Constructor() {
     
     var promise = new Promise.Promise();
     
-    var fileString = "{\n"
+    var fileString = "{\n"+
       '"deviceId": "59e58bdee3627a0001a83d9d",\n'+
       '"serverIp": "192.241.214.57",\n'+
       '"serverPort": "3000",\n'+

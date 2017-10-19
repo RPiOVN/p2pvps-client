@@ -1,8 +1,9 @@
-//This program writes out the Dockerfile and modified reverse-tunnel.js files.
 
 /*
  * Copyright 2017 RPiOVN.org
- * Licensing Information: http://rpiovn.org/license 
+ * Licensing Information: MIT License
+ *
+ * This program writes out the Dockerfile and various configuration files.
  */
 
 var fs = require('fs');
@@ -18,7 +19,7 @@ function Constructor() {
   var username = "testname";
   var password = "testpass";
 
-
+  // This function writes out the Dockerfile.
   this.writeDockerfile = function(port, username, password) {
 
     var promise = new Promise.Promise();
@@ -67,6 +68,8 @@ function Constructor() {
     return promise;
   };
 
+  // Write out the reverse-tunnel-generated.js file. This was used in an older prototype before
+  // switching to config files. -CT 10/18/17
   this.writeReverseTunnel = function(port, username, password) {
     debugger;
     
@@ -103,6 +106,36 @@ function Constructor() {
   };
   
 
+  // writeClientConfig writes out the config.json file.
+  this.writeClientConfig = function(port) {
+    debugger;
+    
+    var promise = new Promise.Promise();
+    
+    var fileString = "{\n"+
+      '"deviceId": "59e58bdee3627a0001a83d9d",\n'+
+      '"serverIp": "192.241.214.57",\n'+
+      '"serverPort": "3000",\n'+
+      '"sshServer": "174.138.35.118",\n'+
+      '"sshServerPort": 6100,\n'+
+      '"sshTunnelPort": 6101\n'+
+      '}\n';
+
+    fs.writeFile('./test-config.js', fileString, function (err) {
+
+      if(err) {
+        debugger;
+        console.error('Error while trying to write config.json file: ', err);
+        promise.reject(err);
+        
+      } else {
+        console.log('config.json written successfully!');
+        promise.resolve();
+      }
+    });
+    
+    return promise;
+  };
 
 
   return(this);
