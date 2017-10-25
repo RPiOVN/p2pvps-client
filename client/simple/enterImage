@@ -1,2 +1,2 @@
 #!/bin/bash
-docker container run --name child-shell --rm -p 3100:3100 -it child-shell /bin/bash
+docker container run --name renter-shell --rm -p 3100:3100 -p 6100:6100 -it renter-shell /bin/bash

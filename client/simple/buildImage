@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t child-shell .
+docker build -t renter-shell .
