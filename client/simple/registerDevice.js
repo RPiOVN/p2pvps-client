@@ -141,7 +141,7 @@ request.post(
       console.log('Port: '+data.clientData.port);
       
       //var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
-      var promiseClientConfig = global.writeFiles.writeClientConfig(data.clientData.port);
+      var promiseClientConfig = global.writeFiles.writeClientConfig(data.clientData.port, deviceGUID);
       
       promiseClientConfig.then( function(results) {
         //debugger;

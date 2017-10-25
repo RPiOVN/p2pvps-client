@@ -111,13 +111,13 @@ function Constructor() {
   
 
   // writeClientConfig writes out the config.json file.
-  this.writeClientConfig = function(port) {
+  this.writeClientConfig = function(port, deviceId) {
     debugger;
     
     var promise = new Promise.Promise();
     
     var fileString = "{\n"+
-      '"deviceId": "59e58bdee3627a0001a83d9d",\n'+
+      '"deviceId": "'+deviceId+'",\n'+
       //'"serverIp": "192.241.214.57",\n'+
       '"serverIp": "p2pvps.net",\n'+
       '"serverPort": "3000",\n'+
