@@ -105,7 +105,7 @@ app.get('/', function(request, response, next) {
 
 /* Start up the Express web server */
 app.listen(process.env.PORT || port);
-console.log('Express started on port ' + port);
+//console.log('Express started on port ' + port);
 
 
 //Simulate benchmark tests with dummy data.
