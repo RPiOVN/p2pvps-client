@@ -41,6 +41,14 @@ default password. Then update the device with `sudo apt-get update`.
 
 3. Navigate to the *simple* shell with `cd p2pvps-client/client/simple`. 
 
+* If you haven't yet installed node, do so with these instructions:
+  ``` 
+  sudo apt-get remove nodejs
+  curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  ```
+
+
 4. Install dependencies with `npm install`.
 
 5. Open `deviceGUID.json` with the command `nano deviceGUID.json`. Replace the example GUID in that file
