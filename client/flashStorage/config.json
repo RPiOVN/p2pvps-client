@@ -4,5 +4,5 @@
 "serverPort": "3000",
 "sshServer": "p2pvps.net",
 "sshServerPort": 6100,
-"sshTunnelPort": 6024
+"sshTunnelPort": 6025
 }

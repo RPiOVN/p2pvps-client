@@ -1,30 +1,19 @@
 {
-  "name": "rpibroker",
-  "version": "1.0.0",
-  "description": "Client for RPiBroker marketplace",
-  "main": "registerDevice.js",
+  "name": "connect-client.js",
+  "version": "0.0.1",
+  "description": "Connects the Client to the P2P VPS server",
+  "main": "connectClient.js",
   "dependencies": {
-    "express": "^4.15.4",
+    "express": "^4.16.2",
     "express3-handlebars": "^0.5.2",
     "node-promise": "^0.5.12",
-    "request": "^2.81.0"
+    "request": "^2.83.0",
+    "reverse-tunnel-ssh": "^1.1.0"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RPiOVN/rpibroker.git"
-  },
-  "keywords": [
-    "raspberry",
-    "pi"
-  ],
-  "author": "Chris Troutner",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/RPiOVN/rpibroker/issues"
-  },
-  "homepage": "https://github.com/RPiOVN/rpibroker#readme"
+  "author": "chris.troutner@gmail.com",
+  "license": "MIT"
 }
