@@ -114,9 +114,9 @@ function Constructor() {
     
     var fileString = "{\n"+
       '"deviceId": "59e58bdee3627a0001a83d9d",\n'+
-      '"serverIp": "192.241.214.57",\n'+
+      '"serverIp": "p2pvps.net",\n'+
       '"serverPort": "3000",\n'+
-      '"sshServer": "174.138.35.118",\n'+
+      '"sshServer": "p2pvps.net",\n'+
       '"sshServerPort": 6100,\n'+
       '"sshTunnelPort": '+port+'\n'+
       '}\n';

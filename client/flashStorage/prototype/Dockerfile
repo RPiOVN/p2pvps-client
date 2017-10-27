@@ -58,6 +58,7 @@ COPY dummyapp.js dummyapp.js
 COPY finalsetup finalsetup
 COPY connectClient.js connectClient.js
 COPY package.json package.json
+COPY config.json config.json
 RUN chmod 775 finalsetup
 
 ENTRYPOINT ["./finalsetup", "node", "dummyapp.js"]
