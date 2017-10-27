@@ -113,7 +113,7 @@ var checkInTimer = setInterval(function() {
 
     });
 
-}, 12000);
+}, 120000);
 
 
 
