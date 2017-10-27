@@ -50,6 +50,7 @@ function Constructor() {
         "COPY reverse-tunnel-generated.js reverse-tunnel.js\n"+
         "RUN chmod 775 finalsetup\n"+
         "RUN useradd -ms /bin/bash "+username+"\n"+
+        "RUN useradd "+username+" sudo\n"+
         "RUN echo "+username+":"+password+" | chpasswd\n"+
         "EXPOSE "+port+"\n"+
         //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
