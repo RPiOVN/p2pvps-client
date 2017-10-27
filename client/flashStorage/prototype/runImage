@@ -4,4 +4,4 @@
 #cp config ~/.ssh/
 
 #Run the docker image
-docker run -d --rm --name child-shell -p 6101:6101 -p 3100:3100 child-shell
+docker run -d --rm --name flash-shell -p 6101:6101 -p 3100:3100 flash-shell
