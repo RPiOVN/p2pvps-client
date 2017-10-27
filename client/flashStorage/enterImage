@@ -1,2 +1,3 @@
 #!/bin/bash
-docker container run --name child-shell --rm -p 3100:3100 -v /media/cryptfs:/home/6SQw18oY8N/encrypted -it child-shell /bin/bash
+#docker container run --name child-shell --rm -p 3100:3100 -v /media/cryptfs:/home/6SQw18oY8N/encrypted -it child-shell /bin/bash
+docker container run --name flash-shell --rm -p 3100:3100 -it flash-shell /bin/bash
