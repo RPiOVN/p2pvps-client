@@ -1,0 +1,19 @@
+{
+  "name": "connect-client.js",
+  "version": "0.0.1",
+  "description": "Connects the Client to the P2P VPS server",
+  "main": "connectClient.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express3-handlebars": "^0.5.2",
+    "node-promise": "^0.5.12",
+    "request": "^2.83.0",
+    "reverse-tunnel-ssh": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chris.troutner@gmail.com",
+  "license": "MIT"
+}
