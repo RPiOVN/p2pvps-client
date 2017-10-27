@@ -43,7 +43,7 @@ RUN npm install
 
 #Create the user and add them to the sudo group.
 RUN useradd -ms /bin/bash testuser
-#RUN adduser testuser sudo
+RUN adduser testuser sudo #Give user sudo permission
 
 #Set password to 'password' change value below if you want a different password
 RUN echo testuser:password | chpasswd
