@@ -20,11 +20,16 @@ var Promise = require('node-promise');
 var exec = require('child_process').exec; //Used to execute command line instructions.
 //var Gpio = require('onoff').Gpio; //Used to read GPIO pins
 
-//var global = {}; //Global object variable.
-//global.serverIp = "174.138.35.118";
-//global.serverPort = "3002";
-global.serverIp = "192.168.2.2";
+
+//Marketplace server
+//global.serverIp = "192.241.214.57";
+global.serverIp = "p2pvps.net";
 global.serverPort = "3000";
+
+//SSH server used for setting up a reverse SSH connection to the Client.
+//global.sshServerIp = "174.138.35.118";
+global.sshServerIp = "p2pvps.net";
+global.sshServerPort = "6100";
 
 //Local libraries based on the different featuers of this software
 /*
@@ -100,7 +105,7 @@ app.get('/', function(request, response, next) {
 
 /* Start up the Express web server */
 app.listen(process.env.PORT || port);
-console.log('Express started on port ' + port);
+//console.log('Express started on port ' + port);
 
 
 //Simulate benchmark tests with dummy data.
@@ -135,9 +140,10 @@ request.post(
       console.log('Password: '+data.clientData.password);
       console.log('Port: '+data.clientData.port);
       
-      var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
+      //var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
+      var promiseClientConfig = global.writeFiles.writeClientConfig(data.clientData.port, deviceGUID.deviceId);
       
-      promiseRT.then( function(results) {
+      promiseClientConfig.then( function(results) {
         //debugger;
         
         var promiseDockerfile = global.writeFiles.writeDockerfile(data.clientData.port, data.clientData.username, data.clientData.password);
@@ -145,7 +151,8 @@ request.post(
         promiseDockerfile.then( function(results) {
           //debugger;
 
-          console.log('Dockerfile and reverse-tunnel-generated.js successfully written.')
+          console.log('All files written out successfully.');
+          process.exit(1);
 
         }, function(error) {
           debugger;

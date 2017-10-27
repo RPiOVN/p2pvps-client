@@ -1,8 +1,9 @@
-//This program writes out the Dockerfile and modified reverse-tunnel.js files.
 
 /*
  * Copyright 2017 RPiOVN.org
- * Licensing Information: http://rpiovn.org/license 
+ * Licensing Information: MIT License
+ *
+ * This program writes out the Dockerfile and various configuration files.
  */
 
 var fs = require('fs');
@@ -18,7 +19,7 @@ function Constructor() {
   var username = "testname";
   var password = "testpass";
 
-
+  // This function writes out the Dockerfile.
   this.writeDockerfile = function(port, username, password) {
 
     var promise = new Promise.Promise();
@@ -37,19 +38,22 @@ function Constructor() {
         "RUN bash nodesource_setup.sh\n"+
         "RUN apt-get install -y nodejs\n"+
         "RUN apt-get install -y build-essential\n"+
-        "RUN npm install express\n"+
-        "RUN npm install reverse-tunnel-ssh\n"+
-        "RUN useradd -ms /bin/bash "+username+"\n"+
-        "RUN echo "+username+":"+password+" | chpasswd\n"+
-        "VOLUME /home/"+username+"/encrypted\n"+
-        "EXPOSE "+port+"\n"+
+        "WORKDIR /root\n"+
+        "COPY package.json package.json\n"+
+        "RUN npm install\n"+
         "EXPOSE 3100\n"+
         "COPY dummyapp.js dummyapp.js\n"+
         "COPY finalsetup finalsetup\n"+
+        "COPY connectClient.js connectClient.js\n"+
+        "COPY package.json package.json\n"+
+        "COPY config.json config.json\n"+
         "COPY reverse-tunnel-generated.js reverse-tunnel.js\n"+
         "RUN chmod 775 finalsetup\n"+
+        "RUN useradd -ms /bin/bash "+username+"\n"+
+        "RUN echo "+username+":"+password+" | chpasswd\n"+
+        "EXPOSE "+port+"\n"+
         //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
-        "ENTRYPOINT [\"./finalsetup\", \"node\", \"reverse-tunnel.js\"]\n";
+        "ENTRYPOINT [\"./finalsetup\", \"node\", \"connectClient.js\"]\n";
 
 
     fs.writeFile('./Dockerfile', fileString, function (err) {
@@ -68,6 +72,8 @@ function Constructor() {
     return promise;
   };
 
+  // Write out the reverse-tunnel-generated.js file. This was used in an older prototype before
+  // switching to config files. -CT 10/18/17
   this.writeReverseTunnel = function(port, username, password) {
     debugger;
     
@@ -75,8 +81,8 @@ function Constructor() {
     
     var fileString = "var tunnel = require('reverse-tunnel-ssh');\n"+
       "tunnel({\n"+
-      "  host: '"+global.serverIp+"',\n"+
-      "  port: 6100,\n"+
+      "  host: '"+global.sshServerIp+"',\n"+
+      "  port: "+global.sshServerPort+",\n"+
       "  username: 'sshuser',\n"+
       "  password: 'sshuserpassword',\n"+
       "  dstHost: '0.0.0.0',\n"+
@@ -104,6 +110,38 @@ function Constructor() {
   };
   
 
+  // writeClientConfig writes out the config.json file.
+  this.writeClientConfig = function(port, deviceId) {
+    debugger;
+    
+    var promise = new Promise.Promise();
+    
+    var fileString = "{\n"+
+      '"deviceId": "'+deviceId+'",\n'+
+      //'"serverIp": "192.241.214.57",\n'+
+      '"serverIp": "p2pvps.net",\n'+
+      '"serverPort": "3000",\n'+
+      //'"sshServer": "174.138.35.118",\n'+
+      '"sshServer": "p2pvps.net",\n'+
+      '"sshServerPort": 6100,\n'+
+      '"sshTunnelPort": '+port+'\n'+
+      '}\n';
+
+    fs.writeFile('./config.json', fileString, function (err) {
+
+      if(err) {
+        debugger;
+        console.error('Error while trying to write config.json file: ', err);
+        promise.reject(err);
+        
+      } else {
+        console.log('config.json written successfully!');
+        promise.resolve();
+      }
+    });
+    
+    return promise;
+  };
 
 
   return(this);
