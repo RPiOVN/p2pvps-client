@@ -45,7 +45,6 @@ function Constructor() {
         "COPY dummyapp.js dummyapp.js\n"+
         "COPY finalsetup finalsetup\n"+
         "COPY connectClient.js connectClient.js\n"+
-        "COPY package.json package.json\n"+
         "COPY config.json config.json\n"+
         "COPY reverse-tunnel-generated.js reverse-tunnel.js\n"+
         "RUN chmod 775 finalsetup\n"+
