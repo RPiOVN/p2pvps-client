@@ -19,12 +19,11 @@ EXPOSE 3100
 COPY dummyapp.js dummyapp.js
 COPY finalsetup finalsetup
 COPY connectClient.js connectClient.js
-COPY package.json package.json
 COPY config.json config.json
 COPY reverse-tunnel-generated.js reverse-tunnel.js
 RUN chmod 775 finalsetup
-RUN useradd -ms /bin/bash wT0q9K6tLR
-RUN adduser wT0q9K6tLR sudo
-RUN echo wT0q9K6tLR:eOuhcOh5XD | chpasswd
-EXPOSE 6025
-ENTRYPOINT ["./finalsetup", "node", "dummyapp.js"]
+RUN useradd -ms /bin/bash RTt7M8HsKB
+RUN adduser RTt7M8HsKB sudo
+RUN echo RTt7M8HsKB:PYoMBNcRh4 | chpasswd
+EXPOSE 6026
+ENTRYPOINT ["./finalsetup", "node", "connectClient.js"]
