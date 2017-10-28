@@ -4,4 +4,4 @@
 #cp config ~/.ssh/
 
 #Run the docker image
-docker run -d --rm --name flash-shell -p 6100:6100 -p 3100:3100 -v /media/usb:/media/storage flash-shell
+docker run -d --rm --name flash-shell -p 6100:6100 -p 3100:3100 -v /media/usb:/media/storage --restart unless-stopped flash-shell

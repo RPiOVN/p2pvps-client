@@ -1,9 +1,10 @@
 #!/bin/bash
 # This script formats and mounts a USB flash drive.
 
+echo Preparing flash drive...
 sudo umount /dev/sda1
 sudo mkfs.ext4 /dev/sda1
 sudo mkdir /media/usb
-sudo mount /dev/sda1 /media/usb/
+sudo mount -a /dev/sda1 /media/usb/
 sudo chown -R pi:pi /media/usb/
-
+echo ...finished preparing flash drive.
