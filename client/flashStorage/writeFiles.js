@@ -51,6 +51,7 @@ function Constructor() {
         "RUN useradd -ms /bin/bash "+username+"\n"+
         "RUN adduser "+username+" sudo\n"+
         "RUN echo "+username+":"+password+" | chpasswd\n"+
+        "VOLUME /media/storage\n"+
         "EXPOSE "+port+"\n"+
         //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
         "ENTRYPOINT [\"./finalsetup\", \"node\", \"connectClient.js\"]\n";
