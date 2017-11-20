@@ -15,9 +15,6 @@ RUN apt-get install -y build-essential
 WORKDIR /root
 COPY package.json package.json
 RUN npm install
-RUN useradd -ms /bin/bash 8IWoUmridt
-RUN echo 8IWoUmridt:0JVL3Bg7O8 | chpasswd
-EXPOSE 6003
 EXPOSE 3100
 COPY dummyapp.js dummyapp.js
 COPY finalsetup finalsetup
@@ -26,4 +23,7 @@ COPY package.json package.json
 COPY config.json config.json
 COPY reverse-tunnel-generated.js reverse-tunnel.js
 RUN chmod 775 finalsetup
-ENTRYPOINT ["./finalsetup", "node", "dummyapp.js"]
+RUN useradd -ms /bin/bash vzF8Mm8c1L
+RUN echo vzF8Mm8c1L:ePVzwmIm1W | chpasswd
+EXPOSE 6001
+ENTRYPOINT ["./finalsetup", "node", "connectClient.js"]

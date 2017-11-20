@@ -13,7 +13,7 @@ var Promise = require('node-promise');
 // Global configuration defaults
 global.serverIp = "192.241.214.57";
 //global.serverIp = "p2pvps.net";
-global.serverPort = "3000";
+global.serverPort = "80";
 //global.GUID = "59e58bdee3627a0001a83d9d";
 global.sshServer = '174.138.35.118';
 global.sshServerPort = 6100;
