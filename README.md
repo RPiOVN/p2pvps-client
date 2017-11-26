@@ -28,7 +28,7 @@ repository. The P2P VPS software is composed of three software packages:
 
 1. *The Client* software runs on the IoT device and allows the device to be rented.
 2. *The Server* software includes the database models, REST APIs, and website content.
-3. *The Marketplace* which is a Vue.js client-side application which facilitates transactions and administration of devices.
+3. *The Marketplace* is a Vue.js browser-based dashboard which facilitates transactions and administration of devices.
 
 This repository contains *The Client*. [The Server and Marketplace software can be found here](https://github.com/RPiOVN/p2pvps-server).
 
