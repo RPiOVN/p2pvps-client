@@ -24,7 +24,7 @@ var exec = require('child_process').exec; //Used to execute command line instruc
 //Marketplace server
 //global.serverIp = "192.241.214.57";
 global.serverIp = "p2pvps.net";
-global.serverPort = "3000";
+global.serverPort = "3001";
 
 //SSH server used for setting up a reverse SSH connection to the Client.
 //global.sshServerIp = "174.138.35.118";

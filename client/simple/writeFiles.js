@@ -120,7 +120,7 @@ function Constructor() {
       '"deviceId": "'+deviceId+'",\n'+
       //'"serverIp": "192.241.214.57",\n'+
       '"serverIp": "p2pvps.net",\n'+
-      '"serverPort": "3000",\n'+
+      '"serverPort": "3001",\n'+
       //'"sshServer": "174.138.35.118",\n'+
       '"sshServer": "p2pvps.net",\n'+
       '"sshServerPort": 6100,\n'+
