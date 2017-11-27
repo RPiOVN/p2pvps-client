@@ -7,7 +7,7 @@
  */
 
 var fs = require('fs');
-var Promise = require('node-promise');
+//var Promise = require('node-promise');
 
 var globalThis; //Used in functions below when 'this' loses context.
 
@@ -56,7 +56,7 @@ function Constructor() {
         "ENTRYPOINT [\"./finalsetup\", \"node\", \"connectClient.js\"]\n";
 
 
-    fs.writeFile('./Dockerfile', fileString, function (err) {
+    fs.writeFile('./support_files/Dockerfile', fileString, function (err) {
 
       if(err) {
         debugger;
@@ -93,7 +93,7 @@ function Constructor() {
       "    console.error('Error! ', error);\n"+
       "});";
     
-    fs.writeFile('./reverse-tunnel-generated.js', fileString, function (err) {
+    fs.writeFile('./support_files/reverse-tunnel-generated.js', fileString, function (err) {
 
       if(err) {
         debugger;
@@ -127,7 +127,7 @@ function Constructor() {
       '"sshTunnelPort": '+port+'\n'+
       '}\n';
 
-    fs.writeFile('./config.json', fileString, function (err) {
+    fs.writeFile('./support_files/config.json', fileString, function (err) {
 
       if(err) {
         debugger;

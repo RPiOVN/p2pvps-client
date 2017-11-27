@@ -37,7 +37,7 @@ var express = require('express');
 var fs = require('fs');
 var http = require('http'); //Used for GET and POST requests
 var request = require('request'); //Used for CURL requests.
-var Promise = require('node-promise');
+//var Promise = require('node-promise');
 var exec = require('child_process').exec; //Used to execute command line instructions.
 
 
@@ -62,7 +62,7 @@ var AppLogAPI = require('./lib/appLogAPI.js');
 var Diagnostics = require('./lib/diagnostics.js');
 */
 
-var writeFiles = require('./writeFiles.js');
+var writeFiles = require('./lib/writeFiles.js');
 global.writeFiles = new writeFiles.Constructor();
 
 try {
