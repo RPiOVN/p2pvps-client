@@ -69,7 +69,7 @@ function Constructor() {
         }
       });
 
-    }
+    });
       
     return promise;
     
@@ -108,7 +108,8 @@ function Constructor() {
           resolve();
         }
       });
-    }
+    });
+      
     return promise;
   };
   
@@ -142,7 +143,8 @@ function Constructor() {
           resolve();
         }
       });
-    }
+    });
+    
     return promise;
   };
 
