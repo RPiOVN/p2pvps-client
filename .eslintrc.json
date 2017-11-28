@@ -5,7 +5,7 @@
   },
   "plugins": ["prettier", "unicorn", "promise"],
   "rules": {
-    "no-debugger": ["error"],
+    "no-debugger": 0,
     "no-regex-spaces": ["error"],
     "no-unsafe-negation": ["error"],
     "curly": ["error", "multi-or-nest", "consistent"],

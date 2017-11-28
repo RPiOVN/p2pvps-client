@@ -49,28 +49,10 @@ global.sshServerIp = "p2pvps.net";
 global.sshServerPort = "6100";
 
 //Local libraries based on the different featuers of this software
-/*
-var serverSettings = require('./assets/server_settings.json'); //This should be the first library loaded.
-var GPSInterface = require('./lib/gps-interface.js');
-var DataLog = require('./lib/data-log.js');
-var ServerInterface = require('./lib/server-interface.js');
-var WifiInterface = require('./lib/wifi.js');
-var AppLogAPI = require('./lib/appLogAPI.js');
-var Diagnostics = require('./lib/diagnostics.js');
-*/
-
 const writeFiles = require("./lib/writeFiles.js");
 global.writeFiles = new writeFiles.Constructor();
-
-
-let deviceGUID;
-try {
-  deviceGUID = require("./deviceGUID.json");
-  console.log(`Registering device ID ${deviceGUID.deviceId}`);
-} catch (err) {
-  console.error("Could not open the deviceGUID.json file!", err);
-  process.exit(1);
-}
+const p2pVpsServer = require("./lib/p2p-vps-server.js");
+global.p2pVpsServer = new p2pVpsServer.Constructor();
 
 const app = express();
 const port = 4000;
@@ -132,79 +114,33 @@ obj.internetSpeed = "Fake Test Data";
 const now = new Date();
 obj.checkinTimeStamp = now.toISOString();
 
-// Proposed code flow:
 // Read in deviceGUID.json file
+let deviceGUID;
+try {
+  deviceGUID = require("./deviceGUID.json");
+  console.log(`Registering device ID ${deviceGUID.deviceId}`);
+} catch (err) {
+  console.error("Could not open the deviceGUID.json file!", err);
+  process.exit(1);
+}
+
 // Register with the server.
-// Write out support files (Dockerfile, reverse-tunnel.js)
-// Launch the Docker container.
-// Begin 10 minute loop
-//  Send heartbeat signal to server.
-//  Check expiration date
+p2pVpsServer
+  .register(config)
 
-//Register with the server by sending the benchmark data.
-request.post(
-  {
-    url: `http://${global.serverIp}:${global.serverPort}/api/devicePublicData/${
-      deviceGUID.deviceId
-    }/register`,
-    form: obj,
-  },
-  function(error, response, body) {
-    try {
-      //If the request was successfull, the server will respond with username, password, and port to be
-      //used to build the Docker file.
-      if (!error && response.statusCode === 200) {
-        //Convert the data from a string into a JSON object.
-        const data = JSON.parse(body); //Convert the returned JSON to a JSON string.
+  // Write out support files (Dockerfile, reverse-tunnel.js)
+  .then(() => {
+    debugger;
+  })
 
-        console.log(`Username: ${data.clientData.username}`);
-        console.log(`Password: ${data.clientData.password}`);
-        console.log(`Port: ${data.clientData.port}`);
+  // Launch the Docker container.
+  // Begin 10 minute loop
+  //  Send heartbeat signal to server.
+  //  Check expiration date
 
-        //var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
-        const promiseClientConfig = global.writeFiles.writeClientConfig(
-          data.clientData.port,
-          deviceGUID.deviceId
-        );
-
-        promiseClientConfig
-          .then(results => {
-            //debugger;
-
-            const promiseDockerfile = global.writeFiles.writeDockerfile(
-              data.clientData.port,
-              data.clientData.username,
-              data.clientData.password
-            );
-
-            promiseDockerfile
-              .then(results => {
-                //debugger;
-
-                console.log("All files written out successfully.");
-                process.exit(1);
-              })
-              .catch(error => {
-                console.error("Error resolving promise. Error: ", error);
-              });
-          })
-          .catch(error => {
-            console.error("Error resolving promise. Error: ", error);
-          })
-          .catch(err => {
-            throw err;
-          });
-      } else {
-        console.error("Server responded with error when trying to register the device: ", error);
-        console.error(
-          "Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace."
-        );
-      }
-    } catch (err) {
-      console.log(`rpiBroker.js exiting with error:${err}`);
-    }
-  }
-);
+  .catch(err => {
+    console.error("Error in main program: ", err);
+  });
 
 /*
 function launchDocker() {
