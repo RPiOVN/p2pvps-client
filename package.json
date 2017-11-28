@@ -1,0 +1,26 @@
+{
+  "name": "p2pvps-client",
+  "version": "1.0.0",
+  "description": "This is Client software for P2P VPS marketplace.",
+  "main": "index.js",
+  "private": "false",
+  "scripts": {
+    "test": "echo no tests yet."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/welocalize/google-integration.git"
+  },
+  "author": "Chris Troutner",
+  "license": "MIT",
+  "homepage": "http://p2pvps.org",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.11.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-unicorn": "^3.0.0",
+    "prettier": "^1.8.2"
+  }
+}

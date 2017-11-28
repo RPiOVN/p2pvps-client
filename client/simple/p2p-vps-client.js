@@ -1,21 +1,21 @@
 /*
   This is the primary 'governor' application that drives a Client devices and allows it to communicate
   with a P2P VPS Server. The scope of this application is to:
-  
+
   * It reads the deviceGUID.json file and registers the Client device with the P2P VPS server.
-  
+
   * It builds the Docker container with information returned by the server after registration.
-  
+
   * It launches the Docker container after being built.
-  
-  * It sends a heartbeat signal to the P2P VPS server every 10 minutes. The server responds with an 
-  expiration date. 
+
+  * It sends a heartbeat signal to the P2P VPS server every 10 minutes. The server responds with an
+  expiration date.
     * (Maybe I can also send benchmark data to the server?)
-  
-  * When the expiration date is reached, or the Server can not be reached after 30 minutes, the governor 
-  software stops the Docker container and wipes the flash drive. It then reregisters itself with the 
+
+  * When the expiration date is reached, or the Server can not be reached after 30 minutes, the governor
+  software stops the Docker container and wipes the flash drive. It then reregisters itself with the
   P2P VPS marketplace.
-  
+
   Specifications for this program can be found here:
   https://github.com/RPiOVN/p2pvps-server/blob/b1fd8e709f264db4a1d869e8939033ca39a895da/specifications/client-specification.md
 */
@@ -25,21 +25,18 @@
  * MIT License. See LICENSE.md for details.
  */
 
-
 //This file registers with the server
-'use strict';
-
+"use strict";
 
 /*
  * Express Dependencies
  */
-var express = require('express');
-var fs = require('fs');
-var http = require('http'); //Used for GET and POST requests
-var request = require('request'); //Used for CURL requests.
+const express = require("express");
+const fs = require("fs");
+const http = require("http"); //Used for GET and POST requests
+const request = require("request"); //Used for CURL requests.
 //var Promise = require('node-promise');
-var exec = require('child_process').exec; //Used to execute command line instructions.
-
+const exec = require("child_process").exec; //Used to execute command line instructions.
 
 //Marketplace server
 //global.serverIp = "192.241.214.57";
@@ -62,20 +59,21 @@ var AppLogAPI = require('./lib/appLogAPI.js');
 var Diagnostics = require('./lib/diagnostics.js');
 */
 
-var writeFiles = require('./lib/writeFiles.js');
+const writeFiles = require("./lib/writeFiles.js");
 global.writeFiles = new writeFiles.Constructor();
 
+
+let deviceGUID;
 try {
-  var deviceGUID = require('./deviceGUID.json'); 
-  console.log('Registering device ID '+deviceGUID.deviceId);
-} catch(err) {
-  console.error('Could not open the deviceGUID.json file!', err);
+  deviceGUID = require("./deviceGUID.json");
+  console.log(`Registering device ID ${deviceGUID.deviceId}`);
+} catch (err) {
+  console.error("Could not open the deviceGUID.json file!", err);
   process.exit(1);
 }
 
-
-var app = express();
-var port = 4000;
+const app = express();
+const port = 4000;
 
 /*
  * Global Variables
@@ -85,12 +83,11 @@ var port = 4000;
 //for specific features like WiFi, GPS, data logging, server interface, etc.
 global.debugState = true; //Used to turn verbose debugging off or on.
 
-
 /*
  * Use Handlebars for templating
  */
-var exphbs = require('express3-handlebars');
-var hbs;
+const exphbs = require("express3-handlebars");
+let hbs;
 
 // For gzip compression
 //app.use(express.compress());
@@ -98,44 +95,42 @@ var hbs;
 /*
  * Config for Production and Development
  */
-app.engine('handlebars', exphbs({
+app.engine(
+  "handlebars",
+  exphbs({
     // Default Layout and locate layouts and partials
-    defaultLayout: 'main',
-    layoutsDir: 'views/layouts/',
-    partialsDir: 'views/partials/'
-}));
+    defaultLayout: "main",
+    layoutsDir: "views/layouts/",
+    partialsDir: "views/partials/",
+  })
+);
 
 // Locate the views
-app.set('views', __dirname + '/views');
+app.set("views", `${__dirname}/views`);
 
 // Locate the assets
-app.use(express.static(__dirname + '/assets'));
-
+app.use(express.static(`${__dirname}/assets`));
 
 // Set Handlebars
-app.set('view engine', 'handlebars');
-
-
+app.set("view engine", "handlebars");
 
 // Index Page
-app.get('/', function(request, response, next) {
-    response.render('index');
+app.get("/", function(request, response, next) {
+  response.render("index");
 });
 
 /* Start up the Express web server */
 app.listen(process.env.PORT || port);
 //console.log('Express started on port ' + port);
 
-
 //Simulate benchmark tests with dummy data.
-var obj = {};
+const obj = {};
 obj.memory = "Fake Test Data";
 obj.diskSpace = "Fake Test Data";
 obj.processor = "Fake Test Data";
 obj.internetSpeed = "Fake Test Data";
-var now = new Date();
+const now = new Date();
 obj.checkinTimeStamp = now.toISOString();
-
 
 // Proposed code flow:
 // Read in deviceGUID.json file
@@ -143,72 +138,79 @@ obj.checkinTimeStamp = now.toISOString();
 // Write out support files (Dockerfile, reverse-tunnel.js)
 // Launch the Docker container.
 // Begin 10 minute loop
-  // Send heartbeat signal to server.
-  // Check expiration date
+//  Send heartbeat signal to server.
+//  Check expiration date
 
 //Register with the server by sending the benchmark data.
 request.post(
   {
-    url: 'http://'+global.serverIp+':'+global.serverPort+'/api/devicePublicData/'+deviceGUID.deviceId+'/register', 
-    form: obj
+    url: `http://${global.serverIp}:${global.serverPort}/api/devicePublicData/${
+      deviceGUID.deviceId
+    }/register`,
+    form: obj,
   },
-	function (error, response, body) {
+  function(error, response, body) {
+    try {
+      //If the request was successfull, the server will respond with username, password, and port to be
+      //used to build the Docker file.
+      if (!error && response.statusCode === 200) {
+        //Convert the data from a string into a JSON object.
+        const data = JSON.parse(body); //Convert the returned JSON to a JSON string.
 
-	try {
-	
-    //If the request was successfull, the server will respond with username, password, and port to be
-    //used to build the Docker file.
-    if (!error && response.statusCode == 200) {
-      debugger;
+        console.log(`Username: ${data.clientData.username}`);
+        console.log(`Password: ${data.clientData.password}`);
+        console.log(`Port: ${data.clientData.port}`);
 
-      //Convert the data from a string into a JSON object.
-      var data = JSON.parse(body); //Convert the returned JSON to a JSON string.
+        //var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
+        const promiseClientConfig = global.writeFiles.writeClientConfig(
+          data.clientData.port,
+          deviceGUID.deviceId
+        );
 
-      console.log('Username: '+data.clientData.username);
-      console.log('Password: '+data.clientData.password);
-      console.log('Port: '+data.clientData.port);
-      
-      //var promiseRT = global.writeFiles.writeReverseTunnel(data.clientData.port, data.clientData.username, data.clientData.password);
-      var promiseClientConfig = global.writeFiles.writeClientConfig(data.clientData.port, deviceGUID.deviceId);
-      
-      promiseClientConfig.then( function(results) {
-        //debugger;
-        
-        var promiseDockerfile = global.writeFiles.writeDockerfile(data.clientData.port, data.clientData.username, data.clientData.password);
-        
-        promiseDockerfile.then( function(results) {
-          //debugger;
+        promiseClientConfig
+          .then(results => {
+            //debugger;
 
-          console.log('All files written out successfully.');
-          process.exit(1);
+            const promiseDockerfile = global.writeFiles.writeDockerfile(
+              data.clientData.port,
+              data.clientData.username,
+              data.clientData.password
+            );
 
-        }, function(error) {
-          debugger;
-          console.error('Error resolving promise. Error: ', error);
-        });
-        
-      }, function(error) {
-        debugger;
-        console.error('Error resolving promise. Error: ', error);
-      });
-      
-    } else {
-      debugger;
+            promiseDockerfile
+              .then(results => {
+                //debugger;
 
-      console.error('Server responded with error when trying to register the device: ',error);
-      console.error('Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace.');
+                console.log("All files written out successfully.");
+                process.exit(1);
+              })
+              .catch(error => {
+                console.error("Error resolving promise. Error: ", error);
+              });
+          })
+          .catch(error => {
+            console.error("Error resolving promise. Error: ", error);
+          })
+          .catch(err => {
+            throw err;
+          });
+      } else {
+        console.error("Server responded with error when trying to register the device: ", error);
+        console.error(
+          "Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace."
+        );
+      }
+    } catch (err) {
+      console.log(`rpiBroker.js exiting with error:${err}`);
     }
-	} catch(err) {
-		console.log('rpiBroker.js exiting with error:'+err);
-	}
-
-});
+  }
+);
 
 /*
 function launchDocker() {
   debugger;
   console.log('Launching Docker container...');
-  
+
   exec('./buildImage', function(err, stdout, stderr) {
     //debugger;
 
@@ -217,7 +219,7 @@ function launchDocker() {
         return false;
     } else {
       console.log('Docker image built.');
-      
+
       exec('./runImage', function(err, stdout, stderr) {
         //debugger;
 

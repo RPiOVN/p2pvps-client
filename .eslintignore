@@ -1,0 +1,3 @@
+# /node_modules/* is a default rule, but only counts for the project-root
+**/node_modules/*
+**/coverage/*

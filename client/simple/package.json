@@ -1,6 +1,6 @@
 {
   "name": "connect-client.js",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Connects the Client to the P2P VPS server",
   "main": "connectClient.js",
   "dependencies": {
@@ -9,6 +9,10 @@
     "node-promise": "^0.5.12",
     "request": "^2.83.0",
     "reverse-tunnel-ssh": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RPiOVN/p2pvps-client"
   },
   "devDependencies": {},
   "scripts": {

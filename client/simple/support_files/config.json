@@ -1,8 +1,8 @@
 {
-"deviceId": "5a123e44a644ec0001098756",
+"deviceId": "5a1c31bd18a27300676ea7b2",
 "serverIp": "p2pvps.net",
 "serverPort": "3001",
 "sshServer": "p2pvps.net",
 "sshServerPort": 6100,
-"sshTunnelPort": 6002
+"sshTunnelPort": 6010
 }
