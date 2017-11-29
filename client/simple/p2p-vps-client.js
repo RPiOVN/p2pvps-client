@@ -159,6 +159,10 @@ global.p2pVpsServer
   })
 
   // Launch the Docker container.
+  .then(() => {
+    return execa('./buildImage').stdout.pipe(process.stdout)
+  })
+
   // Begin 10 minute loop
   //  Send heartbeat signal to server.
   //  Check expiration date
