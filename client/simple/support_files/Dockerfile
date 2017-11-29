@@ -1,9 +1,9 @@
 FROM resin/rpi-raspbian
 MAINTAINER Chris Troutner <chris.troutner@gmail.com>
-RUN apt-get update
+RUN apt-get -y update
 RUN apt-get install -y openssh-server
-RUN apt-get install nano
-RUN apt-get install ssh
+RUN apt-get install -y nano
+RUN apt-get install -y ssh
 RUN mkdir /var/run/sshd
 RUN sed 's@sessions*requireds*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 ENV NOTVISIBLE "in users profile"
@@ -23,7 +23,7 @@ COPY package.json package.json
 COPY config.json config.json
 COPY reverse-tunnel-generated.js reverse-tunnel.js
 RUN chmod 775 finalsetup
-RUN useradd -ms /bin/bash F53tDqmWNh
-RUN echo F53tDqmWNh:HY3SgNXY2K | chpasswd
-EXPOSE 6014
+RUN useradd -ms /bin/bash qRN7AsjJV2
+RUN echo qRN7AsjJV2:WCsHw4J2k4 | chpasswd
+EXPOSE 6017
 ENTRYPOINT ["./finalsetup", "node", "connectClient.js"]

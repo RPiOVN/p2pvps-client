@@ -37,6 +37,7 @@ const http = require("http"); //Used for GET and POST requests
 const request = require("request"); //Used for CURL requests.
 //var Promise = require('node-promise');
 const exec = require("child_process").exec; //Used to execute command line instructions.
+const execa = require("execa");
 
 //Marketplace server
 //global.serverIp = "192.241.214.57";

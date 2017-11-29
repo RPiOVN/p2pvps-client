@@ -7,28 +7,23 @@
 
 "use strict";
 
-var fs = require("fs");
-//var Promise = require('node-promise');
+const fs = require("fs");
 
-var globalThis; //Used in functions below when 'this' loses context.
+let globalThis; //Used in functions below when 'this' loses context.
 
 function Constructor() {
   globalThis = this;
 
-  const port = "6101";
-  const username = "testname";
-  const password = "testpass";
-
   // This function writes out the Dockerfile.
   this.writeDockerfile = function(port, username, password) {
-    const promise = new Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       const fileString =
         `${"FROM resin/rpi-raspbian\n" +
           "MAINTAINER Chris Troutner <chris.troutner@gmail.com>\n" +
-          "RUN apt-get update\n" +
+          "RUN apt-get -y update\n" +
           "RUN apt-get install -y openssh-server\n" +
-          "RUN apt-get install nano\n" +
-          "RUN apt-get install ssh\n" +
+          "RUN apt-get install -y nano\n" +
+          "RUN apt-get install -y ssh\n" +
           "RUN mkdir /var/run/sshd\n" +
           "RUN sed 's@sessions*requireds*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd\n" +
           'ENV NOTVISIBLE "in users profile"\n' +
@@ -65,17 +60,15 @@ function Constructor() {
         }
       });
     });
-
-    return promise;
   };
 
   // DEPRECATED
   // Write out the reverse-tunnel-generated.js file. This was used in an older prototype before
   // switching to config files. -CT 10/18/17
   this.writeReverseTunnel = function(port, username, password) {
-    debugger;
+    //debugger;
 
-    const promise = new Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       const fileString =
         `${"var tunnel = require('reverse-tunnel-ssh');\n" + "tunnel({\n" + "  host: '"}${
           global.sshServerIp
@@ -102,15 +95,13 @@ function Constructor() {
         }
       });
     });
-
-    return promise;
   };
 
   // writeClientConfig writes out the config.json file.
   this.writeClientConfig = function(port, deviceId) {
     debugger;
 
-    const promise = new Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
       const fileString =
         `${"{\n" + '"deviceId": "'}${deviceId}",\n` +
         //'"serverIp": "192.241.214.57",\n'+
@@ -133,8 +124,6 @@ function Constructor() {
         }
       });
     });
-
-    return promise;
   };
 
   return this;
