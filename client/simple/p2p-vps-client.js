@@ -38,6 +38,7 @@ const request = require("request"); //Used for CURL requests.
 //var Promise = require('node-promise');
 const exec = require("child_process").exec; //Used to execute command line instructions.
 const execa = require("execa");
+const getStream = require("get-stream");
 
 //Marketplace server
 //global.serverIp = "192.241.214.57";
@@ -160,26 +161,36 @@ global.p2pVpsServer
 
   // Build the Docker container.
   .then(() => {
-    return execa("./buildImage")
-      .stdout.pipe(process.stdout)
-      //.then(() => {
-      //  console.log("Image has been built.");
-      //});
+    //return execa("./buildImage").stdout.pipe(process.stdout);
+    //.then(() => {
+    //  console.log("Image has been built.");
+    //});
+
+    const stream = execa("./buildImage").stdout;
+
+    stream.pipe(process.stdout);
+
+    getStream(stream).then(value => {
+      console.log("child output:", value);
+    })
+    .catch(err => {
+      throw err;
+    });
   })
 
+  /*
   // Run the Docker container
   .then(() => {
-    return execa("./runImage")
-      .stdout.pipe(process.stdout)
-      //.then(() => {
-      //  console.log("Image is running.");
-      //});
+    return execa("./runImage").stdout.pipe(process.stdout);
+    //.then(() => {
+    //  console.log("Image is running.");
+    //});
   })
 
   .then(() => {
-    console.log('Docker image has been build and is running.');
+    console.log("Docker image has been build and is running.");
   })
-
+*/
   // Begin 10 minute loop
   //  Send heartbeat signal to server.
   //  Check expiration date
