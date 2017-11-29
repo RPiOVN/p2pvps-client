@@ -28,7 +28,7 @@ function Constructor() {
           "RUN sed 's@sessions*requireds*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd\n" +
           'ENV NOTVISIBLE "in users profile"\n' +
           'RUN echo "export VISIBLE=now" >> /etc/profile\n' +
-          "RUN curl -sL https://deb.nodesource.com/setup_4.x -o nodesource_setup.sh\n" +
+          "RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh\n" +
           "RUN bash nodesource_setup.sh\n" +
           "RUN apt-get install -y nodejs\n" +
           "RUN apt-get install -y build-essential\n" +
