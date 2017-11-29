@@ -160,12 +160,18 @@ global.p2pVpsServer
 
   // Build the Docker container.
   .then(() => {
-    return execa("./buildImage").stdout.pipe(process.stdout);
+    return execa("./buildImage").stdout.pipe(process.stdout)
+    .then(() => {
+      console.log('Image has been built.');
+    })
   })
 
   // Run the Docker container
   .then(() => {
-    return execa("./runImage").stdout.pipe(process.stdout);
+    return execa("./runImage").stdout.pipe(process.stdout)
+    .then(() => {
+      console.log('Image is running.');
+    })
   })
 
   // Begin 10 minute loop
