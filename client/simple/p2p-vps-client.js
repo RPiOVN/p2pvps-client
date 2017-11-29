@@ -49,7 +49,7 @@ global.sshServerIp = "p2pvps.net";
 global.sshServerPort = "6100";
 
 //Local libraries based on the different featuers of this software
-const writeFiles = require("./lib/writeFiles.js");
+const writeFiles = require("./lib/write-files.js");
 global.writeFiles = new writeFiles.Constructor();
 const p2pVpsServer = require("./lib/p2p-vps-server.js");
 global.p2pVpsServer = new p2pVpsServer.Constructor();
@@ -124,13 +124,37 @@ try {
   process.exit(1);
 }
 
+const config = {
+  deviceId: deviceGUID.deviceId,
+  deviceSpecs: obj,
+};
+
 // Register with the server.
-p2pVpsServer
-  .register(config)
+global.p2pVpsServer
+  .register2(config)
 
   // Write out support files (Dockerfile, reverse-tunnel.js)
-  .then(() => {
+  .then(clientData => {
     debugger;
+
+    return (
+      global.writeFiles
+        // Write out config.json file.
+        .writeClientConfig(clientData.port, deviceGUID.deviceId)
+
+        // Write out the Dockerfile.
+        .then(() =>
+          global.writeFiles.writeDockerfile(
+            clientData.port,
+            clientData.username,
+            clientData.password
+          )
+        )
+
+        .catch(err => {
+          console.error("Problem writing out support files: ", err);
+        })
+    );
   })
 
   // Launch the Docker container.

@@ -4,6 +4,7 @@
   "description": "Connects the Client to the P2P VPS server",
   "main": "connectClient.js",
   "dependencies": {
+    "execa": "^0.8.0",
     "express": "^4.16.2",
     "express3-handlebars": "^0.5.2",
     "node-promise": "^0.5.12",
