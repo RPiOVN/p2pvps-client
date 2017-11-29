@@ -161,36 +161,28 @@ global.p2pVpsServer
 
   // Build the Docker container.
   .then(() => {
-    //return execa("./buildImage").stdout.pipe(process.stdout);
-    //.then(() => {
-    //  console.log("Image has been built.");
-    //});
 
     const stream = execa("./buildImage").stdout;
 
     stream.pipe(process.stdout);
 
-    getStream(stream).then(value => {
-      console.log("child output:", value);
-    })
-    .catch(err => {
-      throw err;
-    });
+    return getStream(stream)
   })
 
-  /*
+
   // Run the Docker container
   .then(() => {
-    return execa("./runImage").stdout.pipe(process.stdout);
-    //.then(() => {
-    //  console.log("Image is running.");
-    //});
+    const stream = execa("./runImage").stdout;
+
+    stream.pipe(process.stdout);
+
+    return getStream(stream)
   })
 
   .then(() => {
     console.log("Docker image has been build and is running.");
   })
-*/
+
   // Begin 10 minute loop
   //  Send heartbeat signal to server.
   //  Check expiration date
