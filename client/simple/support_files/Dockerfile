@@ -8,7 +8,7 @@ RUN mkdir /var/run/sshd
 RUN sed 's@sessions*requireds*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
-RUN curl -sL https://deb.nodesource.com/setup_4.x -o nodesource_setup.sh
+RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
 RUN apt-get install -y build-essential
@@ -23,7 +23,7 @@ COPY package.json package.json
 COPY config.json config.json
 COPY reverse-tunnel-generated.js reverse-tunnel.js
 RUN chmod 775 finalsetup
-RUN useradd -ms /bin/bash qRN7AsjJV2
-RUN echo qRN7AsjJV2:WCsHw4J2k4 | chpasswd
-EXPOSE 6017
+RUN useradd -ms /bin/bash i2vQ8pLQJc
+RUN echo i2vQ8pLQJc:xxUZH7ICv9 | chpasswd
+EXPOSE 6020
 ENTRYPOINT ["./finalsetup", "node", "connectClient.js"]
