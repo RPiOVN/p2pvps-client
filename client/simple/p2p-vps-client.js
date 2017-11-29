@@ -58,6 +58,7 @@ global.p2pVpsServer = new p2pVpsServer.Constructor();
 
 const app = express();
 const port = 4000;
+let heartBeatTimer;
 
 /*
  * Global Variables
@@ -181,41 +182,26 @@ global.p2pVpsServer
 
   .then(() => {
     console.log("Docker image has been build and is running.");
-  })
 
-  // Begin 10 minute loop
-  //  Send heartbeat signal to server.
-  //  Check expiration date
+    // Begin 10 minutes loop
+    heartBeatTimer = setInterval(function() {sendHeartBeat();}, 10*60000);
+  })
 
   .catch(err => {
     console.error("Error in main program: ", err);
   });
 
-/*
-function launchDocker() {
+
+// This function is called by a timer after the Docker contain has been successfully
+// launched.
+function sendHeartBeat() {
   debugger;
-  console.log('Launching Docker container...');
 
-  exec('./buildImage', function(err, stdout, stderr) {
-    //debugger;
+  // Send heartbeat signal to server
+  global.p2pVpsServer.sendHeartBeat(deviceGUID.deviceId)
 
-    if (err) {
-        console.log('child process for buildImage exited with error code ' + err.code);
-        return false;
-    } else {
-      console.log('Docker image built.');
-
-      exec('./runImage', function(err, stdout, stderr) {
-        //debugger;
-
-        if (err) {
-            console.log('child process for buildImage exited with error code ' + err.code);
-            return false;
-        } else {
-          console.log('Docker image is running.');
-        }
-      });
-    }
+  // Check expiration date
+  .then(serverResponse => {
+    debugger;
   });
 }
-*/
