@@ -134,7 +134,7 @@ const config = {
 
 // Register with the server.
 global.p2pVpsServer
-  .register2(config)
+  .register(config)
 
   // Write out support files (Dockerfile, reverse-tunnel.js)
   .then(clientData => {

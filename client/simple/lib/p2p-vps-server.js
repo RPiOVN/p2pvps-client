@@ -61,6 +61,8 @@ function Constructor() {
 
   this.sendHeartBeat = function(deviceId) {
     debugger;
+
+    // Code here would look very much like keepAlive.js
   }
 
   return this;
