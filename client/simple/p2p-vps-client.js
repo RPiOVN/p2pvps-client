@@ -128,6 +128,9 @@ try {
   process.exit(1);
 }
 
+// This is a high-level function used to register the client with this Client with the Server.
+// It calls the registration function, writes out the support files, builds the Docker container,
+// and launches the Docker container.
 function registerDevice() {
   const config = {
     deviceId: deviceGUID.deviceId,
@@ -141,6 +144,9 @@ function registerDevice() {
     // Write out support files (Dockerfile, reverse-tunnel.js)
     .then(clientData => {
       debugger;
+
+      // Save data to a global variable for use in later functions.
+      global.clientData = clientData;
 
       return (
         global.writeFiles
@@ -237,6 +243,6 @@ function checkExpiration() {
 
     .catch(err => {
       debugger;
-      console.error("Error in sendHeartBeat: ", err);
+      console.error("Error in checkExpiration: ", err);
     });
 }
