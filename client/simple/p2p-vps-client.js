@@ -181,7 +181,7 @@ function registerDevice() {
   })
 */
     .then(() => {
-      console.log("Docker image has been build and is running.");
+      console.log("Docker image has been built and is running.");
 
       // Begin 10 minutes loop
       checkExpirationTimer = setInterval(function() {
