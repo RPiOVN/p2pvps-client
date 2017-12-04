@@ -63,7 +63,26 @@ function Constructor() {
     debugger;
 
     // Code here would look very much like keepAlive.js
-  }
+  };
+
+  // This function returns a devicePublicModel given the deviceId.
+  this.getDevicePublicModel = function(deviceId) {
+    debugger;
+
+    const options = {
+      method: "GET",
+      uri: `http://p2pvps.net/api/devicePublicData/${deviceId}`,
+      json: true, // Automatically stringifies the body to JSON
+    };
+
+    return rp(options).then(function(data) {
+      debugger;
+
+      if (data.collection === undefined) throw `No devicePublicModel with ID of ${deviceId}`;
+
+      return data.collection;
+    });
+  };
 
   return this;
 }

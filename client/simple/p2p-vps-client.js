@@ -162,14 +162,12 @@ global.p2pVpsServer
 
   // Build the Docker container.
   .then(() => {
-
     const stream = execa("./buildImage").stdout;
 
     stream.pipe(process.stdout);
 
-    return getStream(stream)
+    return getStream(stream);
   })
-
 
   // Run the Docker container
   .then(() => {
@@ -177,31 +175,39 @@ global.p2pVpsServer
 
     stream.pipe(process.stdout);
 
-    return getStream(stream)
+    return getStream(stream);
   })
 
   .then(() => {
     console.log("Docker image has been build and is running.");
 
     // Begin 10 minutes loop
-    heartBeatTimer = setInterval(function() {sendHeartBeat();}, 10*60000);
+    checkExpirationTimer = setInterval(function() {
+      checkExpiration();
+    }, 1 * 60000);
   })
 
   .catch(err => {
     console.error("Error in main program: ", err);
   });
 
-
 // This function is called by a timer after the Docker contain has been successfully
 // launched.
-function sendHeartBeat() {
+function checkExpiration() {
   debugger;
 
-  // Send heartbeat signal to server
-  global.p2pVpsServer.sendHeartBeat(deviceGUID.deviceId)
+  // Get the devicePublicModel from the server.
+  global.p2pVpsServer
+    //.sendHeartBeat(deviceGUID.deviceId)
+    .getDevicePublicModel(deviceGUID.deviceId)
 
-  // Check expiration date
-  .then(serverResponse => {
-    debugger;
-  });
+    // Check expiration date
+    .then(serverResponse => {
+      debugger;
+    })
+
+    .catch(err => {
+      debugger;
+      console.error("Error in sendHeartBeat: ", err);
+    });
 }
