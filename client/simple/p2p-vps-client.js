@@ -222,7 +222,7 @@ function checkExpiration() {
         // Stop the docker container.
         console.log("Stopping the docker container");
         //const stream = execa("docker", ["stop", "renter-shell"]).stdout;
-        const stream = execa("docker stop renter-shell").stdout;
+        const stream = execa("./stopImage").stdout;
 
         stream.pipe(process.stdout);
 

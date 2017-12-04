@@ -60,12 +60,6 @@ function Constructor() {
     });
   };
 
-  this.sendHeartBeat = function(deviceId) {
-    debugger;
-
-    // Code here would look very much like keepAlive.js
-  };
-
   // This function returns a devicePublicModel given the deviceId.
   this.getDevicePublicModel = function(deviceId) {
     debugger;
