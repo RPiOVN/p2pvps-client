@@ -220,6 +220,7 @@ function checkExpiration() {
         stream.pipe(process.stdout);
 
         return getStream(stream).then(output => {
+          debugger;
           clearInterval(checkExpirationTimer); // Stop the timer.
 
           registerDevice(); // Re-register the device with the server.
