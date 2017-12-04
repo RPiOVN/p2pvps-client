@@ -10,6 +10,7 @@
 // Libraries
 const fs = require("fs");
 const request = require("request"); //Used for CURL requests.
+const rp = require("request-promise");
 
 // Globals
 let globalThis; //Used in functions below when 'this' loses context.
