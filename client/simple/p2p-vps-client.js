@@ -137,56 +137,56 @@ function registerDevice() {
   // Register with the server.
   global.p2pVpsServer
     .register(config)
-    /*
-  // Write out support files (Dockerfile, reverse-tunnel.js)
-  .then(clientData => {
-    debugger;
 
-    return (
-      global.writeFiles
-        // Write out config.json file.
-        .writeClientConfig(clientData.port, deviceGUID.deviceId)
+    // Write out support files (Dockerfile, reverse-tunnel.js)
+    .then(clientData => {
+      debugger;
 
-        // Write out the Dockerfile.
-        .then(() =>
-          global.writeFiles.writeDockerfile(
-            clientData.port,
-            clientData.username,
-            clientData.password
+      return (
+        global.writeFiles
+          // Write out config.json file.
+          .writeClientConfig(clientData.port, deviceGUID.deviceId)
+
+          // Write out the Dockerfile.
+          .then(() =>
+            global.writeFiles.writeDockerfile(
+              clientData.port,
+              clientData.username,
+              clientData.password
+            )
           )
-        )
 
-        .catch(err => {
-          console.error("Problem writing out support files: ", err);
-        })
-    );
-  })
+          .catch(err => {
+            console.error("Problem writing out support files: ", err);
+          })
+      );
+    })
 
-  // Build the Docker container.
-  .then(() => {
-    const stream = execa("./buildImage").stdout;
+    // Build the Docker container.
+    .then(() => {
+      const stream = execa("./buildImage").stdout;
 
-    stream.pipe(process.stdout);
+      stream.pipe(process.stdout);
 
-    return getStream(stream);
-  })
+      return getStream(stream);
+    })
 
-  // Run the Docker container
-  .then(() => {
-    const stream = execa("./runImage").stdout;
+    // Run the Docker container
+    .then(() => {
+      const stream = execa("./runImage").stdout;
 
-    stream.pipe(process.stdout);
+      stream.pipe(process.stdout);
 
-    return getStream(stream);
-  })
-*/
+      return getStream(stream);
+    })
+
     .then(() => {
       console.log("Docker image has been built and is running.");
 
       // Begin 10 minutes loop
       checkExpirationTimer = setInterval(function() {
         checkExpiration();
-      }, 1 * 20000);
+      }, 2 * 60000);
     })
 
     .catch(err => {
