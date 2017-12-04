@@ -36,10 +36,10 @@ const fs = require("fs");
 const http = require("http"); //Used for GET and POST requests
 const request = require("request"); //Used for CURL requests.
 const rp = require("request-promise");
+const getStream = require("get-stream");
 //var Promise = require('node-promise');
 const exec = require("child_process").exec; //Used to execute command line instructions.
 const execa = require("execa");
-const getStream = require("get-stream");
 
 //Marketplace server
 //global.serverIp = "192.241.214.57";
@@ -128,15 +128,16 @@ try {
   process.exit(1);
 }
 
-const config = {
-  deviceId: deviceGUID.deviceId,
-  deviceSpecs: obj,
-};
+function registerDevice() {
+  const config = {
+    deviceId: deviceGUID.deviceId,
+    deviceSpecs: obj,
+  };
 
-// Register with the server.
-global.p2pVpsServer
-  .register(config)
-  /*
+  // Register with the server.
+  global.p2pVpsServer
+    .register(config)
+    /*
   // Write out support files (Dockerfile, reverse-tunnel.js)
   .then(clientData => {
     debugger;
@@ -179,18 +180,20 @@ global.p2pVpsServer
     return getStream(stream);
   })
 */
-  .then(() => {
-    console.log("Docker image has been build and is running.");
+    .then(() => {
+      console.log("Docker image has been build and is running.");
 
-    // Begin 10 minutes loop
-    checkExpirationTimer = setInterval(function() {
-      checkExpiration();
-    }, 1 * 60000);
-  })
+      // Begin 10 minutes loop
+      checkExpirationTimer = setInterval(function() {
+        checkExpiration();
+      }, 1 * 60000);
+    })
 
-  .catch(err => {
-    console.error("Error in main program: ", err);
-  });
+    .catch(err => {
+      console.error("Error in main program: ", err);
+    });
+}
+registerDevice();
 
 // This function is called by a timer after the Docker contain has been successfully
 // launched.
@@ -203,8 +206,25 @@ function checkExpiration() {
     .getDevicePublicModel(deviceGUID.deviceId)
 
     // Check expiration date
-    .then(serverResponse => {
+    .then(publicData => {
       debugger;
+
+      const expiration = new Date(publicData.expiration);
+      const now = new Date();
+
+      // If the expiration date has been reached
+      if (expiration < now) {
+        // Stop the docker container.
+        const stream = execa("docker", ["stop", "renter-shell"]).stdout;
+
+        stream.pipe(process.stdout);
+
+        return getStream(stream).then(output => {
+          clearInterval(checkExpirationTimer); // Stop the timer.
+
+          registerDevice(); // Re-register the device with the server.
+        });
+      }
     })
 
     .catch(err => {
