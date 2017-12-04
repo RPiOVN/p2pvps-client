@@ -186,7 +186,7 @@ function registerDevice() {
       // Begin 10 minutes loop
       checkExpirationTimer = setInterval(function() {
         checkExpiration();
-      }, 1 * 60000);
+      }, 1 * 20000);
     })
 
     .catch(err => {
@@ -215,7 +215,8 @@ function checkExpiration() {
       // If the expiration date has been reached
       if (expiration < now) {
         // Stop the docker container.
-        const stream = execa("docker", ["stop", "renter-shell"]).stdout;
+        //const stream = execa("docker", ["stop", "renter-shell"]).stdout;
+        const stream = execa("docker stop renter-shell").stdout;
 
         stream.pipe(process.stdout);
 
