@@ -58,7 +58,7 @@ global.p2pVpsServer = new p2pVpsServer.Constructor();
 
 const app = express();
 const port = 4000;
-let heartBeatTimer;
+let checkExpirationTimer;
 
 /*
  * Global Variables
