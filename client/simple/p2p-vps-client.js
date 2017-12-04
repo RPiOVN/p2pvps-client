@@ -135,7 +135,7 @@ const config = {
 // Register with the server.
 global.p2pVpsServer
   .register(config)
-
+  /*
   // Write out support files (Dockerfile, reverse-tunnel.js)
   .then(clientData => {
     debugger;
@@ -177,7 +177,7 @@ global.p2pVpsServer
 
     return getStream(stream);
   })
-
+*/
   .then(() => {
     console.log("Docker image has been build and is running.");
 
