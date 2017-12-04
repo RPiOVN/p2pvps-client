@@ -23,7 +23,7 @@ COPY package.json package.json
 COPY config.json config.json
 COPY reverse-tunnel-generated.js reverse-tunnel.js
 RUN chmod 775 finalsetup
-RUN useradd -ms /bin/bash ZxjGYkUaL0
-RUN echo ZxjGYkUaL0:VW7Ee8fMhC | chpasswd
-EXPOSE 6028
+RUN useradd -ms /bin/bash ewnwJuhUhs
+RUN echo ewnwJuhUhs:66XRnXXFej | chpasswd
+EXPOSE 6044
 ENTRYPOINT ["./finalsetup", "node", "connectClient.js"]
