@@ -232,12 +232,24 @@ function checkExpiration() {
 
         stream.pipe(process.stdout);
 
-        return getStream(stream).then(output => {
-          debugger;
-          clearInterval(checkExpirationTimer); // Stop the timer.
+        return (
+          getStream(stream)
+            // Clean up any orphaned docker images.
+            .then(output => {
+              const stream2 = execa("./cleanupImages").stdout;
 
-          registerDevice(); // Re-register the device with the server.
-        });
+              stream2.pipe(process.stdout);
+
+              return getStream(stream2);
+            })
+
+            .then(output => {
+              debugger;
+              clearInterval(checkExpirationTimer); // Stop the timer.
+
+              registerDevice(); // Re-register the device with the server.
+            })
+        );
       }
     })
 
