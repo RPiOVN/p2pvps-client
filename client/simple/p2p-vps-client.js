@@ -243,12 +243,17 @@ function checkExpiration() {
               return getStream(stream2);
             })
 
+            // Remove the OB market listing, if it exists.
+
+            // Reregister the device.
             .then(output => {
               debugger;
               clearInterval(checkExpirationTimer); // Stop the timer.
 
               registerDevice(); // Re-register the device with the server.
             })
+
+          // Replace the OB market listing, if necessary.
         );
       }
     })

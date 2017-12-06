@@ -1,6 +1,8 @@
-var request = require("request"); //Used for CURL style requests.
-var express = require("express");
-var Promise = require("node-promise");
+"use strict";
+
+const request = require("request"); //Used for CURL style requests.
+const express = require("express");
+//const Promise = require("node-promise");
 
 // Global configuration
 global.serverIp = "192.241.214.57";
@@ -8,14 +10,14 @@ global.serverIp = "192.241.214.57";
 global.serverPort = "3000";
 global.GUID = "59e58bdee3627a0001a83d9d";
 
-var app = express();
-var port = 4010;
+const app = express();
+const port = 4010;
 
 /*
  * Use Handlebars for templating
  */
-var exphbs = require("express3-handlebars");
-var hbs;
+const exphbs = require("express3-handlebars");
+let hbs;
 
 // For gzip compression
 //app.use(express.compress());
@@ -52,15 +54,15 @@ app.listen(process.env.PORT || port);
 console.log(`P2P VPS Keep Alive timer started on port ${port}`);
 
 //Simulate benchmark tests with dummy data.
-var obj = {};
+const obj = {};
 obj.memory = "Fake Test Data";
 obj.diskSpace = "Fake Test Data";
 obj.processor = "Fake Test Data";
 obj.internetSpeed = "Fake Test Data";
-var now = new Date();
+const now = new Date();
 obj.checkinTimeStamp = now.toISOString();
 
-var checkInTimer = setInterval(function() {
+const checkInTimer = setInterval(function() {
   //Register with the server by sending the benchmark data.
   request.get(
     {
@@ -72,7 +74,7 @@ var checkInTimer = setInterval(function() {
         debugger;
         //If the request was successfull, the server will respond with username, password, and port to be
         //used to build the Docker file.
-        if (!error && response.statusCode == 200) {
+        if (!error && response.statusCode === 200) {
           debugger;
 
           //Convert the data from a string into a JSON object.

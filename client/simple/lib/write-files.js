@@ -38,7 +38,7 @@ function Constructor() {
           "EXPOSE 3100\n" +
           "COPY dummyapp.js dummyapp.js\n" +
           "COPY finalsetup finalsetup\n" +
-          "COPY connectClient.js connectClient.js\n" +
+          "COPY connect-client.js connect-client.js\n" +
           "COPY package.json package.json\n" +
           "COPY config.json config.json\n" +
           "COPY reverse-tunnel-generated.js reverse-tunnel.js\n" +
@@ -47,7 +47,7 @@ function Constructor() {
         `RUN echo ${username}:${password} | chpasswd\n` +
         `EXPOSE ${port}\n` +
         //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
-        `ENTRYPOINT ["./finalsetup", "node", "connectClient.js"]\n`;
+        `ENTRYPOINT ["./finalsetup", "node", "connect-client.js"]\n`;
 
       fs.writeFile("./support_files/Dockerfile", fileString, function(err) {
         if (err) {
