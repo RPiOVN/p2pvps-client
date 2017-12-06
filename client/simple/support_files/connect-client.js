@@ -9,7 +9,6 @@
 const tunnel = require("reverse-tunnel-ssh"); //tunnel is a ssh2 clientConnection object
 const request = require("request"); //Used for CURL style requests.
 const express = require("express");
-//const Promise = require("node-promise");
 
 /*
 // Global configuration defaults
@@ -120,7 +119,7 @@ const checkInTimer = setInterval(function() {
 }, 120000);
 
 // Establish a reverse SSH connection.
-tunnel(
+const conn = tunnel(
   {
     host: global.config.sshServer,
     port: global.config.sshServerPort, //The SSH port on the server.
@@ -140,3 +139,8 @@ tunnel(
     }
   }
 );
+
+conn.on("error", function(error) {
+  debugger;
+  console.error("Error with reverse-tunnel-ssh: ", error);
+});
