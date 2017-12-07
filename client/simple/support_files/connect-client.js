@@ -106,6 +106,18 @@ const checkInTimer = setInterval(function() {
         } else {
           debugger;
 
+          // Could not connect to the server.
+          if (error.code === "EHOSTUNREACH") debugger;
+          /*
+            error = "{
+              "code": "EHOSTUNREACH",
+              "errno": "EHOSTUNREACH",
+              "syscall": "connect",
+              "address": "192.241.214.57",
+              "port": 3001
+            }"
+            */
+
           console.error("Server responded with error when trying to register the device: ", error);
           console.error(
             "Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace."
@@ -142,5 +154,9 @@ const conn = tunnel(
 
 conn.on("error", function(error) {
   debugger;
+
+  // Could not connect to the internet.
+  if (error.level === "client-timeout") debugger;
+
   console.error("Error with reverse-tunnel-ssh: ", error);
 });
