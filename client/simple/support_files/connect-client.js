@@ -150,7 +150,7 @@ function createTunnel() {
     function(error, clientConnection) {
       if (error) {
         console.log("There was an error in connect-client.js/tunnel()!");
-        console.error("Error! ", error);
+        console.error(JSON.stringify(error, null, 2));
       } else {
         console.log(
           `Reverse tunnel established on destination port ${global.config.sshTunnelPort}`
@@ -167,7 +167,8 @@ function createTunnel() {
       debugger;
       console.log("Warning, could not connect to server. Waiting before retry.");
     } else {
-      console.error("Error with reverse-tunnel-ssh: ", error);
+      console.error("Error with reverse-tunnel-ssh: ");
+      console.error(JSON.stringify(error, null, 2));
     }
 
     // Try again in a short while.
