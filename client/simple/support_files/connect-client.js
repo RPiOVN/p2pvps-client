@@ -107,21 +107,11 @@ const checkInTimer = setInterval(function() {
           debugger;
 
           // Could not connect to the server.
-          if (error.code === "EHOSTUNREACH") {
+          if (error.code === "EHOSTUNREACH" || error.code === "ECONNREFUSED") {
             debugger;
             console.log(`Warning: Could not connect to server at ${now.toLocaleString()}`);
             return;
           }
-          /*
-            error = "{
-              "code": "EHOSTUNREACH",
-              "errno": "EHOSTUNREACH",
-              "syscall": "connect",
-              "address": "192.241.214.57",
-              "port": 3001
-            }"
-            */
-
           console.error("Server responded with error when trying to register the device: ", error);
           console.error(
             "Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace."
@@ -146,7 +136,7 @@ function createTunnel() {
       dstPort: global.config.sshTunnelPort, //The new port that will be opened
       //srcHost: '127.0.0.1', // default
       srcPort: 3100, // The port on the Pi to tunnel to.
-      readyTimeout: 20000,
+      //readyTimeout: 20000,
       debug: myDebug,
     },
     function(error, clientConnection) {
