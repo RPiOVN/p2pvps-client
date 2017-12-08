@@ -146,6 +146,7 @@ function createTunnel() {
       dstPort: global.config.sshTunnelPort, //The new port that will be opened
       //srcHost: '127.0.0.1', // default
       srcPort: 3100, // The port on the Pi to tunnel to.
+      readyTimeout: 20000,
     },
     function(error, clientConnection) {
       if (error) {
