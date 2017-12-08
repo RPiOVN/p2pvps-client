@@ -109,9 +109,13 @@ app.get("/", function(request, response, next) {
 app.listen(process.env.PORT || port).on("error", expressErrorHandler);
 //console.log('Express started on port ' + port);
 
+// Handle generic errors thrown by the express application.
 function expressErrorHandler(err) {
+  if (err.code === "EADDRINUSE")
+    console.error(`Port ${port} is already in use. Is this program already running?`);
+  else console.error(JSON.stringify(err, null, 2));
+
   console.error("Express could not start!");
-  console.error(JSON.stringify(err, null, 2));
   process.exit(0);
 }
 
