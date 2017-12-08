@@ -176,6 +176,14 @@ function createTunnel() {
         createTunnel();
       }, 30000);
     });
+
+    conn.on("close", function(val) {
+      console.log("SSH connection for connect-client.js was closed.");
+    });
+
+    conn.on("end", function(val) {
+      console.log("SSH connection for connect-client ended.");
+    });
   } catch (err) {
     console.error("I caught the error!");
     console.error(JSON.stringify(err, null, 2));
