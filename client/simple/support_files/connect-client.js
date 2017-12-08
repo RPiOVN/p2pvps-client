@@ -106,19 +106,26 @@ const checkInTimer = setInterval(function() {
         } else {
           debugger;
 
-          // Could not connect to the server.
-          if (error.code === "EHOSTUNREACH" || error.code === "ECONNREFUSED") {
+          // Server responded with some other status than 200.
+          if (response.statusCode !== 200) {
+            console.error("P2P VPS server rejected checking: ", response);
+          } else if (error.code === "EHOSTUNREACH" || error.code === "ECONNREFUSED") {
+            // Could not connect to the server.
             debugger;
             console.log(`Warning: Could not connect to server at ${now.toLocaleString()}`);
             return;
+          } else {
+            console.error(
+              "Server responded with error when trying to register the device: ",
+              error
+            );
+            console.error(
+              "Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace."
+            );
           }
-          console.error("Server responded with error when trying to register the device: ", error);
-          console.error(
-            "Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace."
-          );
         }
       } catch (err) {
-        console.log(`rpiBroker.js exiting with error:${err}`);
+        console.log(`connect-client.js exiting with error: ${err}`);
       }
     }
   );
