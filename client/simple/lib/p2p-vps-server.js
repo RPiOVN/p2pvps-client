@@ -52,6 +52,7 @@ function Constructor() {
             console.error(
               "Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace."
             );
+            process.exit(1); // Exit the application.
           } catch (err) {
             console.log(`p2p-vps-server.js/register() exiting with error: ${err}`);
           }
