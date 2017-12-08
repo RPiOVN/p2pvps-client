@@ -147,6 +147,7 @@ function createTunnel() {
       //srcHost: '127.0.0.1', // default
       srcPort: 3100, // The port on the Pi to tunnel to.
       readyTimeout: 20000,
+      debug: myDebug,
     },
     function(error, clientConnection) {
       if (error) {
@@ -177,4 +178,8 @@ function createTunnel() {
       createTunnel();
     }, 30000);
   });
+}
+
+function myDebug(val) {
+  console.log(val);
 }
