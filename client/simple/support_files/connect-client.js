@@ -126,48 +126,53 @@ const checkInTimer = setInterval(function() {
 
 // Establish a reverse SSH connection.
 function createTunnel() {
-  const conn = tunnel(
-    {
-      host: global.config.sshServer,
-      port: global.config.sshServerPort, //The SSH port on the server.
-      username: "sshuser",
-      password: "sshuserpassword",
-      dstHost: "0.0.0.0", // bind to all IPv4 interfaces
-      dstPort: global.config.sshTunnelPort, //The new port that will be opened
-      //srcHost: '127.0.0.1', // default
-      srcPort: 3100, // The port on the Pi to tunnel to.
-      //readyTimeout: 20000,
-      debug: myDebug,
-    },
-    function(error, clientConnection) {
-      if (error) {
-        console.log("There was an error in connect-client.js/tunnel()!");
-        console.error(JSON.stringify(error, null, 2));
-      } else {
-        console.log(
-          `Reverse tunnel established on destination port ${global.config.sshTunnelPort}`
-        );
+  try {
+    const conn = tunnel(
+      {
+        host: global.config.sshServer,
+        port: global.config.sshServerPort, //The SSH port on the server.
+        username: "sshuser",
+        password: "sshuserpassword",
+        dstHost: "0.0.0.0", // bind to all IPv4 interfaces
+        dstPort: global.config.sshTunnelPort, //The new port that will be opened
+        //srcHost: '127.0.0.1', // default
+        srcPort: 3100, // The port on the Pi to tunnel to.
+        //readyTimeout: 20000,
+        debug: myDebug,
+      },
+      function(error, clientConnection) {
+        if (error) {
+          console.log("There was an error in connect-client.js/tunnel()!");
+          console.error(JSON.stringify(error, null, 2));
+        } else {
+          console.log(
+            `Reverse tunnel established on destination port ${global.config.sshTunnelPort}`
+          );
+        }
       }
-    }
-  );
+    );
 
-  conn.on("error", function(error) {
-    debugger;
-
-    // Could not connect to the internet.
-    if (error.level === "client-timeout") {
+    conn.on("error", function(error) {
       debugger;
-      console.log("Warning, could not connect to server. Waiting before retry.");
-    } else {
-      console.error("Error with reverse-tunnel-ssh: ");
-      console.error(JSON.stringify(error, null, 2));
-    }
 
-    // Try again in a short while.
-    setTimeout(function() {
-      createTunnel();
-    }, 30000);
-  });
+      // Could not connect to the internet.
+      if (error.level === "client-timeout") {
+        debugger;
+        console.log("Warning, could not connect to server. Waiting before retry.");
+      } else {
+        console.error("Error with reverse-tunnel-ssh: ");
+        console.error(JSON.stringify(error, null, 2));
+      }
+
+      // Try again in a short while.
+      setTimeout(function() {
+        createTunnel();
+      }, 30000);
+    });
+  } catch (err) {
+    console.error("I caught the error!");
+    console.error(JSON.stringify(err, null, 2));
+  }
 }
 createTunnel(); // Execute the first time.
 
