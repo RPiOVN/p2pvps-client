@@ -105,25 +105,15 @@ app.get("/", function(request, response, next) {
   response.render("index");
 });
 
-app.on("error", err => {
-  console.error("Express could not start!");
-  console.error(JSON.stringify(err, null, 2));
-  process.exit(0);
-});
-
-app.on("uncaughtException", err => {
-  console.error("Express could not start!");
-  console.error(JSON.stringify(err, null, 2));
-  process.exit(0);
-});
-
 /* Start up the Express web server */
-app.listen(process.env.PORT || port).on("error", err => {
+app.listen(process.env.PORT || port).on("error", expressErrorHandler);
+//console.log('Express started on port ' + port);
+
+function expressErrorHandler(err) {
   console.error("Express could not start!");
   console.error(JSON.stringify(err, null, 2));
   process.exit(0);
-});
-//console.log('Express started on port ' + port);
+}
 
 //Simulate benchmark tests with dummy data.
 const obj = {};
