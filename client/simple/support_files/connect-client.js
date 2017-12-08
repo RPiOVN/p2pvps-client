@@ -169,6 +169,7 @@ function createTunnel() {
     }, 30000);
   });
 }
+createTunnel(); // Execute the first time.
 
 function myDebug(val) {
   console.log(val);
