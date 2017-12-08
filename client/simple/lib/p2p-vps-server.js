@@ -45,6 +45,9 @@ function Constructor() {
 
               return resolve(data.clientData);
             }
+
+            //if(error)
+
             console.error(
               "Server responded with error when trying to register the device: ",
               error
@@ -52,6 +55,7 @@ function Constructor() {
             console.error(
               "Ensure the ID in your deviceGUID.json file matches the ID in the Owned Devices section of the marketplace."
             );
+            console.log(JSON.stringify(error, null, 2));
             process.exit(1); // Exit the application.
           } catch (err) {
             console.log(`p2p-vps-server.js/register() exiting with error: ${err}`);
