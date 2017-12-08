@@ -105,16 +105,15 @@ app.get("/", function(request, response, next) {
   response.render("index");
 });
 
-/* Start up the Express web server */
-
-app.listen(process.env.PORT || port);
-//console.log('Express started on port ' + port);
-
 app.on("error", err => {
   console.error("Express could not start!");
   console.error(JSON.stringify(err, null, 2));
   process.exit(0);
 });
+
+/* Start up the Express web server */
+app.listen(process.env.PORT || port);
+//console.log('Express started on port ' + port);
 
 //Simulate benchmark tests with dummy data.
 const obj = {};
