@@ -107,7 +107,11 @@ const checkInTimer = setInterval(function() {
           debugger;
 
           // Could not connect to the server.
-          if (error.code === "EHOSTUNREACH") debugger;
+          if (error.code === "EHOSTUNREACH") {
+            debugger;
+            console.log(`Warning: Could not connect to server at ${now.toLocaleString()}`);
+            return;
+          }
           /*
             error = "{
               "code": "EHOSTUNREACH",
@@ -131,32 +135,44 @@ const checkInTimer = setInterval(function() {
 }, 120000);
 
 // Establish a reverse SSH connection.
-const conn = tunnel(
-  {
-    host: global.config.sshServer,
-    port: global.config.sshServerPort, //The SSH port on the server.
-    username: "sshuser",
-    password: "sshuserpassword",
-    dstHost: "0.0.0.0", // bind to all IPv4 interfaces
-    dstPort: global.config.sshTunnelPort, //The new port that will be opened
-    //srcHost: '127.0.0.1', // default
-    srcPort: 3100, // The port on the Pi to tunnel to.
-  },
-  function(error, clientConnection) {
-    if (error) {
-      console.log("There was an error in connect-client.js/tunnel()!");
-      console.error("Error! ", error);
-    } else {
-      console.log(`Reverse tunnel established on destination port ${global.config.sshTunnelPort}`);
+function createTunnel() {
+  const conn = tunnel(
+    {
+      host: global.config.sshServer,
+      port: global.config.sshServerPort, //The SSH port on the server.
+      username: "sshuser",
+      password: "sshuserpassword",
+      dstHost: "0.0.0.0", // bind to all IPv4 interfaces
+      dstPort: global.config.sshTunnelPort, //The new port that will be opened
+      //srcHost: '127.0.0.1', // default
+      srcPort: 3100, // The port on the Pi to tunnel to.
+    },
+    function(error, clientConnection) {
+      if (error) {
+        console.log("There was an error in connect-client.js/tunnel()!");
+        console.error("Error! ", error);
+      } else {
+        console.log(
+          `Reverse tunnel established on destination port ${global.config.sshTunnelPort}`
+        );
+      }
     }
-  }
-);
+  );
 
-conn.on("error", function(error) {
-  debugger;
+  conn.on("error", function(error) {
+    debugger;
 
-  // Could not connect to the internet.
-  if (error.level === "client-timeout") debugger;
+    // Could not connect to the internet.
+    if (error.level === "client-timeout") {
+      debugger;
+      console.log("Warning, could not connect to server. Waiting before retry.");
+    } else {
+      console.error("Error with reverse-tunnel-ssh: ", error);
+    }
 
-  console.error("Error with reverse-tunnel-ssh: ", error);
-});
+    // Try again in a short while.
+    setTimeout(function() {
+      createTunnel();
+    }, 30000);
+  });
+}
