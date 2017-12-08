@@ -24,7 +24,7 @@ global.config = false;
 
 try {
   global.config = require("./config.json");
-  console.log(`Registering device ID ${global.config.deviceId}`);
+  console.log(`Connecting device to P2P VPS server with ID ${global.config.deviceId}`);
 } catch (err) {
   console.error("Could not open the config.json file!", err);
   process.exit(1);
@@ -137,7 +137,7 @@ function createTunnel() {
       //srcHost: '127.0.0.1', // default
       srcPort: 3100, // The port on the Pi to tunnel to.
       //readyTimeout: 20000,
-      //debug: myDebug,
+      debug: myDebug,
     },
     function(error, clientConnection) {
       if (error) {
