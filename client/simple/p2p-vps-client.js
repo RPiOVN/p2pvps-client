@@ -180,11 +180,16 @@ function registerDevice() {
 
     // Build the Docker container.
     .then(() => {
-      const stream = execa("./buildImage");
+      debugger;
+      //const stream = execa("./buildImage").stdout;
 
-      stream.pipe(process.stdout);
+      //stream.pipe(process.stdout);
 
-      return getStream(stream);
+      //return getStream(stream);
+      return execa("./buildImage").then(result => {
+        debugger;
+        console.log(result.stdout);
+      });
     })
 
     // Run the Docker container
