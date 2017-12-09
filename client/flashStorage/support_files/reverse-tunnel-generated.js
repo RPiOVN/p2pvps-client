@@ -5,7 +5,7 @@ tunnel({
   username: 'sshuser',
   password: 'sshuserpassword',
   dstHost: '0.0.0.0',
-  dstPort: 6018, 
+  dstPort: 6002, 
   srcPort: 3100 
 }, function(error, clientConnection) {
   if(error)
