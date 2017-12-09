@@ -153,7 +153,7 @@ function registerDevice() {
 
     // Write out support files (Dockerfile, reverse-tunnel.js)
     .then(clientData => {
-      debugger;
+      //debugger;
 
       // Save data to a global variable for use in later functions.
       global.clientData = clientData;
@@ -186,10 +186,15 @@ function registerDevice() {
       //stream.pipe(process.stdout);
 
       //return getStream(stream);
-      return execa("./buildImage").then(result => {
-        debugger;
-        console.log(result.stdout);
-      });
+      return execa("./buildImage")
+        .then(result => {
+          debugger;
+          console.log(result.stdout);
+        })
+        .catch(err => {
+          debugger;
+          console.error("Error while trying to build image!", JSON.stringify(err, null, 2));
+        });
     })
 
     // Run the Docker container

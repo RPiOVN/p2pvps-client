@@ -99,7 +99,7 @@ function Constructor() {
 
   // writeClientConfig writes out the config.json file.
   this.writeClientConfig = function(port, deviceId) {
-    debugger;
+    //debugger;
 
     return new Promise(function(resolve, reject) {
       const fileString =

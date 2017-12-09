@@ -21,7 +21,7 @@ function Constructor() {
   // Register with the server.
   this.register = function(config) {
     return new Promise(function(resolve, reject) {
-      debugger;
+      //debugger;
 
       //Register with the server by sending the benchmark data.
       request.post(
@@ -74,7 +74,7 @@ function Constructor() {
 
   // This function returns a devicePublicModel given the deviceId.
   this.getDevicePublicModel = function(deviceId) {
-    debugger;
+    //debugger;
 
     const options = {
       method: "GET",
@@ -83,7 +83,7 @@ function Constructor() {
     };
 
     return rp(options).then(function(data) {
-      debugger;
+      //debugger;
 
       if (data.collection === undefined) throw `No devicePublicModel with ID of ${deviceId}`;
 
