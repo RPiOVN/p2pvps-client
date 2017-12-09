@@ -191,9 +191,9 @@ function registerDevice() {
           console.error(JSON.stringify(err, null, 2));
           process.exit(1);
         });
-
-      child.stdout.pipe(process.stdout);
-      child.stderr.pipe(process.stderr);
+      debugger;
+      //child.stdout.pipe(process.stdout);
+      //child.stderr.pipe(process.stderr);
 
       return child;
     })
@@ -239,6 +239,7 @@ function registerDevice() {
 
     .catch(err => {
       console.error("Error in main program: ", err);
+      process.exit(1);
     });
 }
 registerDevice();
