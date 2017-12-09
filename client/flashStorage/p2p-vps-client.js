@@ -185,7 +185,7 @@ function registerDevice() {
 
     // Wipe and mount the flash drive
     .then(() => {
-      return execa("./prepFlashStorage", undefined, options)
+      return execa("./prepFlashStorage", undefined, execaOptions)
         .then(result => {
           debugger;
           console.log(result.stdout);
@@ -200,7 +200,7 @@ function registerDevice() {
 
     // Build the Docker container.
     .then(() => {
-      return execa("./buildImage", undefined, options)
+      return execa("./buildImage", undefined, execaOptions)
         .then(result => {
           debugger;
           console.log(result.stdout);
@@ -215,7 +215,7 @@ function registerDevice() {
 
     // Run the Docker container
     .then(() => {
-      return execa("./runImage", undefined, options)
+      return execa("./runImage", undefined, execaOptions)
         .then(result => {
           debugger;
           console.log(result.stdout);
