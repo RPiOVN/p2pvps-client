@@ -180,7 +180,7 @@ function registerDevice() {
 
     // Build the Docker container.
     .then(() => {
-      const stream = execa("./buildImage").stdout;
+      const stream = execa("./buildImage");
 
       stream.pipe(process.stdout);
 

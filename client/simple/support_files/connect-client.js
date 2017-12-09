@@ -37,7 +37,7 @@ const port = 4010;
  * Use Handlebars for templating
  */
 const exphbs = require("express3-handlebars");
-let hbs;
+//let hbs;
 
 // For gzip compression
 //app.use(express.compress());
