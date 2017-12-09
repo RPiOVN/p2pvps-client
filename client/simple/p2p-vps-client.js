@@ -193,17 +193,31 @@ function registerDevice() {
         })
         .catch(err => {
           debugger;
-          console.error("Error while trying to build image!", JSON.stringify(err, null, 2));
+          console.error("Error while trying to build image!");
+          console.error(JSON.stringify(err, null, 2));
+          process.exit(1);
         });
     })
 
     // Run the Docker container
     .then(() => {
-      const stream = execa("./runImage").stdout;
+      //const stream = execa("./runImage").stdout;
 
-      stream.pipe(process.stdout);
+      //stream.pipe(process.stdout);
 
-      return getStream(stream);
+      //return getStream(stream);
+
+      return execa("./runImage")
+        .then(result => {
+          debugger;
+          console.log(result.stdout);
+        })
+        .catch(err => {
+          debugger;
+          console.error("Error while trying to build image!");
+          console.error(JSON.stringify(err, null, 2));
+          process.exit(1);
+        });
     })
 
     .then(() => {
