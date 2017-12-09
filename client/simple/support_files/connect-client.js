@@ -163,11 +163,11 @@ function createTunnel() {
       debugger;
 
       // Could not connect to the internet.
-      if (error.level === "client-timeout") {
+      if (error.level === "client-timeout" || error.level === "client-socket") {
         debugger;
         console.log("Warning, could not connect to server. Waiting before retry.");
       } else {
-        console.error("Error with reverse-tunnel-ssh: ");
+        console.error("Error with connect-client.js: ");
         console.error(JSON.stringify(error, null, 2));
       }
 
