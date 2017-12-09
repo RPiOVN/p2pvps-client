@@ -46,12 +46,14 @@ function Constructor() {
               return resolve(data.clientData);
             }
 
-            if (error.code === "EHOSTUNREACH") {
-              console.error("Could not connect to server! Exiting.");
-            } else if (error.code === "ECONNREFUSED") {
-              console.error(
-                "Server could not establish a connection. It may be down temporarily. Try again later."
-              );
+            if (error) {
+              if (error.code === "EHOSTUNREACH") {
+                console.error("Could not connect to server! Exiting.");
+              } else if (error.code === "ECONNREFUSED") {
+                console.error(
+                  "Server could not establish a connection. It may be down temporarily. Try again later."
+                );
+              }
             } else {
               console.error(
                 "Server responded with error when trying to register the device: ",
