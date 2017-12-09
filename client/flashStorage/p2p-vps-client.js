@@ -178,14 +178,23 @@ function registerDevice() {
       );
     })
 
+    // Wipe and mount the flash drive
+    .then(() => {
+      return execa("./prepFlashStorage")
+        .then(result => {
+          debugger;
+          console.log(result.stdout);
+        })
+        .catch(err => {
+          debugger;
+          console.error("Error while trying to wipe and mount flash drive!");
+          console.error(JSON.stringify(err, null, 2));
+          process.exit(1);
+        });
+    })
+
     // Build the Docker container.
     .then(() => {
-      debugger;
-      //const stream = execa("./buildImage").stdout;
-
-      //stream.pipe(process.stdout);
-
-      //return getStream(stream);
       return execa("./buildImage")
         .then(result => {
           debugger;
@@ -201,12 +210,6 @@ function registerDevice() {
 
     // Run the Docker container
     .then(() => {
-      //const stream = execa("./runImage").stdout;
-
-      //stream.pipe(process.stdout);
-
-      //return getStream(stream);
-
       return execa("./runImage")
         .then(result => {
           debugger;

@@ -7,4 +7,5 @@ sudo mkfs.ext4 /dev/sda1
 sudo mkdir /media/usb
 sudo mount -a /dev/sda1 /media/usb/
 sudo chown -R pi:pi /media/usb/
+cp config.json /media/usb
 echo ...finished preparing flash drive.
