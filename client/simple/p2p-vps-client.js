@@ -214,7 +214,7 @@ function registerDevice() {
         })
         .catch(err => {
           debugger;
-          console.error("Error while trying to build image!");
+          console.error("Error while trying to run image!");
           console.error(JSON.stringify(err, null, 2));
           process.exit(1);
         });
