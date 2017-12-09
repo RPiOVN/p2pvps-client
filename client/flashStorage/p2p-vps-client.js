@@ -181,8 +181,8 @@ function registerDevice() {
     // Wipe and mount the flash drive
     .then(() => {
       const options = {
-        stdout: "Stream",
-        stderr: "Stream",
+        stdout: "inherit",
+        stderr: "inherit",
       };
 
       const child = execa("./prepFlashStorage", undefined, options)
