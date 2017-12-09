@@ -147,6 +147,11 @@ function registerDevice() {
     deviceSpecs: obj,
   };
 
+  const execaOptions = {
+    stdout: "inherit",
+    stderr: "inherit",
+  };
+
   // Register with the server.
   global.p2pVpsServer
     .register(config)
@@ -180,12 +185,7 @@ function registerDevice() {
 
     // Wipe and mount the flash drive
     .then(() => {
-      const options = {
-        stdout: "inherit",
-        stderr: "inherit",
-      };
-
-      const child = execa("./prepFlashStorage", undefined, options)
+      return execa("./prepFlashStorage", undefined, options)
         .then(result => {
           debugger;
           console.log(result.stdout);
@@ -196,16 +196,11 @@ function registerDevice() {
           console.error(JSON.stringify(err, null, 2));
           process.exit(1);
         });
-      debugger;
-      //child.stdout.pipe(process.stdout);
-      //child.stderr.pipe(process.stderr);
-
-      return child;
     })
 
     // Build the Docker container.
     .then(() => {
-      return execa("./buildImage")
+      return execa("./buildImage", undefined, options)
         .then(result => {
           debugger;
           console.log(result.stdout);
@@ -220,7 +215,7 @@ function registerDevice() {
 
     // Run the Docker container
     .then(() => {
-      return execa("./runImage")
+      return execa("./runImage", undefined, options)
         .then(result => {
           debugger;
           console.log(result.stdout);
