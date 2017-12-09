@@ -180,7 +180,7 @@ function registerDevice() {
 
     // Wipe and mount the flash drive
     .then(() => {
-      return execa("./prepFlashStorage")
+      const child = execa("./prepFlashStorage")
         .then(result => {
           debugger;
           console.log(result.stdout);
@@ -191,6 +191,11 @@ function registerDevice() {
           console.error(JSON.stringify(err, null, 2));
           process.exit(1);
         });
+
+      child.stdout.pipe(process.stdout);
+      child.stderr.pipe(process.stderr);
+
+      return child;
     })
 
     // Build the Docker container.
