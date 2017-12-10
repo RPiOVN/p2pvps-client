@@ -247,7 +247,7 @@ function checkExpiration() {
       //const now = new Date();
 
       console.log(`Expiration date: ${expiration}`);
-
+      debugger;
       // If the expiration date has been reached
       if (expiration.getTime() < now.getTime()) {
         // Stop the docker container.
