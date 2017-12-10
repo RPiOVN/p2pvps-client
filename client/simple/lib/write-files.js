@@ -41,7 +41,6 @@ function Constructor() {
           "COPY connect-client.js connect-client.js\n" +
           "COPY package.json package.json\n" +
           "COPY config.json config.json\n" +
-          "COPY reverse-tunnel-generated.js reverse-tunnel.js\n" +
           "RUN chmod 775 finalsetup\n" +
           "RUN useradd -ms /bin/bash "}${username}\n` +
         `RUN echo ${username}:${password} | chpasswd\n` +
