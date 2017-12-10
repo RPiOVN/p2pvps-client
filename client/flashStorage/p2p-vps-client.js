@@ -299,6 +299,7 @@ function checkExpiration() {
 
     .catch(err => {
       debugger;
-      console.error("Error in checkExpiration: ", err);
+      console.error("Error in checkExpiration: ");
+      console.error(JSON.stringify(err, null, 2));
     });
 }
