@@ -44,6 +44,8 @@ function Constructor() {
           "VOLUME /media/storage\n" +
           "RUN chmod 775 finalsetup\n" +
           "RUN useradd -ms /bin/bash "}${username}\n` +
+        `RUN chown -R ${username} /media/storage\n` +
+        `RUN adduser ${username} sudo\n` +
         `RUN echo ${username}:${password} | chpasswd\n` +
         `EXPOSE ${port}\n` +
         //"ENTRYPOINT [\"./finalsetup\", \"node\", \"dummyapp.js\"]\n";
