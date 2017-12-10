@@ -244,7 +244,7 @@ function checkExpiration() {
 
     // Check expiration date.
     .then(expiration => {
-      const now = new Date();
+      //const now = new Date();
 
       console.log(`Expiration date: ${expiration}`);
 
