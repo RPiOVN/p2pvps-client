@@ -187,7 +187,7 @@ function registerDevice() {
     .then(() => {
       return execa("./buildImage", undefined, execaOptions)
         .then(result => {
-          debugger;
+          //debugger;
           console.log(result.stdout);
         })
         .catch(err => {
@@ -202,7 +202,7 @@ function registerDevice() {
     .then(() => {
       return execa("./runImage", undefined, execaOptions)
         .then(result => {
-          debugger;
+          //debugger;
           console.log(result.stdout);
         })
         .catch(err => {
@@ -247,9 +247,11 @@ function checkExpiration() {
       //const now = new Date();
 
       console.log(`Expiration date: ${expiration}`);
-      debugger;
+
+      const expirationDate = new Date(expiration);
+
       // If the expiration date has been reached
-      if (expiration.getTime() < now.getTime()) {
+      if (expirationDate.getTime() < now.getTime()) {
         // Stop the docker container.
         console.log("Stopping the docker container");
         //const stream = execa("docker", ["stop", "renter-shell"]).stdout;
