@@ -240,13 +240,10 @@ function checkExpiration() {
   // Get the devicePublicModel from the server.
   global.p2pVpsServer
     //.sendHeartBeat(deviceGUID.deviceId)
-    .getDevicePublicModel(deviceGUID.deviceId)
+    .getExpiration(deviceGUID.deviceId)
 
-    // Check expiration date
-    .then(publicData => {
-      debugger;
-
-      const expiration = new Date(publicData.expiration);
+    // Check expiration date.
+    .then(expiration => {
       const now = new Date();
 
       console.log(`Expiration date: ${expiration}`);
