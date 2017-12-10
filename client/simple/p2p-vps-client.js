@@ -147,6 +147,11 @@ function registerDevice() {
     deviceSpecs: obj,
   };
 
+  const execaOptions = {
+    stdout: "inherit",
+    stderr: "inherit",
+  };
+
   // Register with the server.
   global.p2pVpsServer
     .register(config)
@@ -219,6 +224,7 @@ function registerDevice() {
 
     .catch(err => {
       console.error("Error in main program: ", err);
+      process.exit(1);
     });
 }
 registerDevice();
