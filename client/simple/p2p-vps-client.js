@@ -180,13 +180,7 @@ function registerDevice() {
 
     // Build the Docker container.
     .then(() => {
-      debugger;
-      //const stream = execa("./buildImage").stdout;
-
-      //stream.pipe(process.stdout);
-
-      //return getStream(stream);
-      return execa("./buildImage")
+      return execa("./buildImage", undefined, execaOptions)
         .then(result => {
           debugger;
           console.log(result.stdout);
@@ -201,13 +195,7 @@ function registerDevice() {
 
     // Run the Docker container
     .then(() => {
-      //const stream = execa("./runImage").stdout;
-
-      //stream.pipe(process.stdout);
-
-      //return getStream(stream);
-
-      return execa("./runImage")
+      return execa("./runImage", undefined, execaOptions)
         .then(result => {
           debugger;
           console.log(result.stdout);
