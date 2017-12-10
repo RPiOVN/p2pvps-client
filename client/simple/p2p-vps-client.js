@@ -284,7 +284,7 @@ function checkExpiration() {
 
     .catch(err => {
       debugger;
-      console.error("Error in checkExpiration: ", err);
+      console.error("Error in checkExpiration(): ");
 
       if (err.statusCode === 502) {
         console.error("Connection to the server was refused. Will try again.");
