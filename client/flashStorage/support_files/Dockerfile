@@ -24,7 +24,7 @@ COPY config.json config.json
 COPY reverse-tunnel-generated.js reverse-tunnel.js
 VOLUME /media/storage
 RUN chmod 775 finalsetup
-RUN useradd -ms /bin/bash iuwFbnaVK0
-RUN echo iuwFbnaVK0:Nvmp16E9NE | chpasswd
-EXPOSE 6080
+RUN useradd -ms /bin/bash WJ18Y3xSQO
+RUN echo WJ18Y3xSQO:0MUrYMp8cN | chpasswd
+EXPOSE 6081
 ENTRYPOINT ["./finalsetup", "node", "connect-client.js"]
