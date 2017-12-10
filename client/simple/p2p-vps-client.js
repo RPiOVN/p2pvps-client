@@ -249,7 +249,7 @@ function checkExpiration() {
       console.log(`Expiration date: ${expiration}`);
 
       // If the expiration date has been reached
-      if (expiration < now) {
+      if (expiration.getTime() < now.getTime()) {
         // Stop the docker container.
         console.log("Stopping the docker container");
         //const stream = execa("docker", ["stop", "renter-shell"]).stdout;
