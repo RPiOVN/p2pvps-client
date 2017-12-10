@@ -146,6 +146,7 @@ function createTunnel() {
         srcPort: 3100, // The port on the Pi to tunnel to.
         //readyTimeout: 20000,
         //debug: myDebug,
+        keepaliveInterval: 10000,
       },
       function(error, clientConnection) {
         if (error) {
