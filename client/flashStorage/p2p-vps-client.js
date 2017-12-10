@@ -299,7 +299,13 @@ function checkExpiration() {
 
     .catch(err => {
       debugger;
-      console.error("Error in checkExpiration: ");
-      console.error(JSON.stringify(err, null, 2));
+      console.error("Error in checkExpiration(): ");
+
+      if (err.statusCode === 502) {
+        console.error("Connection to the server was refused. Will try again.");
+      } else {
+        debugger;
+        console.error(JSON.stringify(err, null, 2));
+      }
     });
 }
