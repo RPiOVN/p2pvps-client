@@ -107,8 +107,9 @@ const checkInTimer = setInterval(function() {
           debugger;
 
           // Server responded with some other status than 200.
-          if (response.statusCode !== 200) {
-            console.error("P2P VPS server rejected checking: ", response);
+          if (response) {
+            if (response.statusCode !== 200)
+              console.error("P2P VPS server rejected checking: ", response);
           } else if (error.code === "EHOSTUNREACH" || error.code === "ECONNREFUSED") {
             // Could not connect to the server.
             debugger;
