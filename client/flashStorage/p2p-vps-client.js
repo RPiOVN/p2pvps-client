@@ -252,22 +252,20 @@ function checkExpiration() {
   const now = new Date();
   console.log(`checkExpiration() running at ${now}`);
 
-  // Get the devicePublicModel from the server.
+  // Get the expiration date for this device from the server.
   global.p2pVpsServer
-    //.sendHeartBeat(deviceGUID.deviceId)
-    .getDevicePublicModel(deviceGUID.deviceId)
+    .getExpiration(deviceGUID.deviceId)
 
     // Check expiration date
-    .then(publicData => {
-      debugger;
-
-      const expiration = new Date(publicData.expiration);
-      const now = new Date();
+    .then(expiration => {
+      //debugger;
 
       console.log(`Expiration date: ${expiration}`);
 
+      const expirationDate = new Date(expiration);
+
       // If the expiration date has been reached
-      if (expiration < now) {
+      if (expirationDate.getTime() < now.getTime()) {
         // Stop the docker container.
         console.log("Stopping the docker container");
         //const stream = execa("docker", ["stop", "renter-shell"]).stdout;
