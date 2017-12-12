@@ -134,13 +134,14 @@ try {
 // and launches the Docker container.
 function registerDevice() {
   //Simulate benchmark tests with dummy data.
-  const deviceSpecs = {};
-  obj.memory = "Fake Test Data";
-  obj.diskSpace = "Fake Test Data";
-  obj.processor = "Fake Test Data";
-  obj.internetSpeed = "Fake Test Data";
   const now = new Date();
-  obj.checkinTimeStamp = now.toISOString();
+  const deviceSpecs = {
+    memory: "Fake Test Data",
+    diskSpace: "Fake Test Data",
+    processor: "Fake Test Data",
+    internetSpeed: "Fake Test Data",
+    checkinTimeStamp: now.toISOString(),
+  };
 
   const config = {
     deviceId: deviceGUID.deviceId,

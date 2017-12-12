@@ -119,15 +119,6 @@ function expressErrorHandler(err) {
   process.exit(0);
 }
 
-//Simulate benchmark tests with dummy data.
-const obj = {};
-obj.memory = "Fake Test Data";
-obj.diskSpace = "Fake Test Data";
-obj.processor = "Fake Test Data";
-obj.internetSpeed = "Fake Test Data";
-const now = new Date();
-obj.checkinTimeStamp = now.toISOString();
-
 // Read in deviceGUID.json file
 let deviceGUID;
 try {
@@ -142,9 +133,19 @@ try {
 // It calls the registration function, writes out the support files, builds the Docker container,
 // and launches the Docker container.
 function registerDevice() {
+  //Simulate benchmark tests with dummy data.
+  const now = new Date();
+  const deviceSpecs = {
+    memory: "Fake Test Data",
+    diskSpace: "Fake Test Data",
+    processor: "Fake Test Data",
+    internetSpeed: "Fake Test Data",
+    checkinTimeStamp: now.toISOString(),
+  };
+
   const config = {
     deviceId: deviceGUID.deviceId,
-    deviceSpecs: obj,
+    deviceSpecs: deviceSpecs,
   };
 
   const execaOptions = {
